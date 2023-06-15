@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LAPORAN PENERIMAAN FORMASI</title>
+    <link rel="stylesheet" href="https://api.siamanda.antsoftmedia.com/css/report/style.bundle.css" />
+</head>
+{{-- <body> --}}
+
+<style>
+    @media print {
+        @page {
+            size: landscape
+        }
+    }
+</style>
+
+<body onload="window.print()">
+    <center>
+        <h4>LAPORAN PENERIMAAN FORMASI</h4>
+        <h4>PENGAJUAN MUTASI PEGAWAI NEGERI SIPIL ANTAR DAERAH </h4>
+        <h5>TAHUN 2021</h5>
+    </center>
+
+    <br>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="width:40px;text-align: center;vertical-align: middle" >NO</th>
+                <th style="text-align: center; vertical-align: middle" >NAMA</th>
+                <th  style="text-align: center;vertical-align: middle">NIP</th>
+                <th  style="text-align: center">GOL</th>
+                <th  style="text-align: center;vertical-align: middle">PENDIDIKAN</th>
+                <th  style="text-align: center;vertical-align: middle">JABATAN/INSTANSI ASAL</th>
+                <th  style="text-align: center;vertical-align: middle">FORMASI</th>
+                <th  style="text-align: center;vertical-align: middle">PHOTO</th>
+            </tr>
+            
+        </thead>
+        
+        <tbody>
+            @each(item in items)
+              <tr>
+                  <td class="text-right">{{ item.num }}</td>
+                  <td>{{item.nama}}</td>
+                  <td>{{item.nip}}</td>
+                  <td>{{item.golongan}}</td>
+                  <td>{{item.pendidikan}}</td>
+                  <td>{{item.jabatan}}</td>
+                  <td>{{item.formasi}}</td>
+                  <td><img src="{{item.path}}" width="100" height="130"/></td>
+              </tr>
+            @endeach
+            <!--
+            <tr>
+                <td rowspan="2" class="text-center" colspan="2" style="vertical-align: middle;text-align: center">
+                    <strong>TOTAL</strong>
+                </td>
+                <td rowspan="2" class="text-right"><strong>{{ $total }}</strong></td>
+                <td class="text-right"><strong>{{ $totalP }}</strong></td>
+                <td class="text-right"><strong>{{ $totalL }}</strong></td>
+                <td class="text-right"><strong>{{ $totalUsia1519 }}</strong></td>
+                <td class="text-right"><strong>{{ $totalUsia2029 }}</strong></td>
+                <td class="text-right"><strong>{{ $totalUsia3044 }}</strong></td>
+                <td class="text-right"><strong>{{ $totalUsia4554 }}</strong></td>
+                <td class="text-right"><strong>{{ $totalUsia5560 }}</strong></td>
+                <td class="text-right"><strong>{{ $totalTTSD }}</strong></td>
+                <td class="text-right"><strong>{{ $totalSD }}</strong></td>
+                <td class="text-right"><strong>{{ $totalSMP }}</strong></td>
+                <td class="text-right"><strong>{{ $totalSMA }}</strong></td>
+                <td class="text-right"><strong>{{ $totalD1 }}</strong></td>
+                <td class="text-right"><strong>{{ $totalS1 }}</strong></td>
+                <td class="text-right"><strong>{{ $totalS2 }}</strong></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="text-center" colspan="2"><strong>{{ $total }}</strong></td>
+                <td class="text-center" colspan="5"><strong>{{ $totalUsia }}</strong></td>
+                <td class="text-center" colspan="7"><strong>{{ $totalPendidikan }}</strong></td>
+                <td></td>
+            </tr>
+        -->
+        </tbody>
+    
+    </table>
+    
+
+</body>
+
+</html>

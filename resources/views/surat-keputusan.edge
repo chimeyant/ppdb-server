@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Surat Keputusan</title>
+
+    <style>
+        .logo {
+            float: left;
+            width: 15%;
+            height: 60px;
+            text-align: center;
+        }
+
+        .logo>img {
+            width: 70px;
+        }
+
+        .header {
+            float: left;
+            width: 85%;
+            height: auto;
+            text-align: center;
+            font-size: 18px;
+            font-family: 'Times New Roman', 'Times', 'serif';
+            font-weight: bold;
+            line-height: 15px;
+            margin-bottom: 10px;
+        }
+
+        .header>.address {
+            width: 100%;
+            font-size: 12px;
+            font-weight: normal;
+            line-height: 12px !important;
+            margin-top: 5px;
+        }
+
+        .container {
+            margin: 0 20px;
+        }
+
+        hr {
+            height: 0px;
+            margin: 1px;
+        }
+
+        .header-content {
+            text-align: center;
+            margin: 10px 0px 5px 0px;
+            line-height: 16px;
+            font-weight: bold;
+            border: 1px solid black;
+            font-size: 12px;
+        }
+
+        .content-table  {
+            margin-top: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+    </style>
+
+</head>
+{{-- <body> --}}
+
+<body onload="window.print()" onfocus="window.close()">
+    <div class="container">
+        <div class="logo">
+            <img src="{{ logo }}" alt="">
+        </div>
+
+        <div class="header">
+            <div>
+                <div>PEMERINTAH PROVINSI BANTEN</div>
+                <div>DINAS PENDIDIKAN DAN KEBUDAYAAN</div>
+                <div>UNIT PELAKSANA TEKNIS</div>
+                <div>{{ namasekolah.toUpperCase() }}</div>
+            </div>
+
+            <div class="address">
+                <div>{{ alamat }}</div>
+                <div>{{ url }} email: {{ email}}</div>
+            </div>
+        </div>
+
+        <hr>
+        <hr>
+    </div>
+    <div class="container" style="margin-top:20px;">
+      <div class="title">
+        <div>PANITIA PENERIMAAN PESERTA DIDIK BARU ( PPDB )</div>
+        <div>TAHUN PELAJARAN 2022 – 2023</div>
+      </div>
+      <div class="content">
+        Berdasarkan Petunjuk Teknis Penerimaan Peserta Didik Baru ( PPDB) SMA/SMK/Skh Dinas Pendidikan dan Kebudayaan Provinsi Banten Tahun Pelajaran 2022 / 2023 serta seleksi PPDB {{ namasekolah }} 2022, Kepala {{ namasekolah }}  menerangkan bahwa :
+      </div>
+      <div class="content-table">
+        <table class="table" >
+          <tr class="tr">
+            <td >NO. DAFTAR</td><td>:</td><td>{{ noreg }}</td>
+          </tr>
+          <tr>
+            <td>NISN</td><td>:</td><td>{{ nisn}}</td>
+          </tr>
+          <tr>
+            <td>NAMA PESERTA</td><td>:</td><td>{{ nama }}</td>
+          </tr>
+          <tr>
+            <td>TEMPAT / TANGGAL LAHIR</td><td>:</td><td>{{ttl}}</td>
+          </tr>
+          <tr>
+            <td>ASAL SEKOLAH</td><td>:</td><td>{{ nama_sekolah_asal}}</td>
+          </tr>
+        </table>
+      </div>
+      <div style="margin-top: 30px">
+        <table class="table">
+          <tr class="tr-lulus">
+            <td>
+              DINYATAKAN DITERIMA
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="content">
+        Menjadi Calon Peserta Didik Baru {{ namasekolah }} Tahun Pelajaran 2022/2023  Pada Kompetensi Keahlian :
+      </div>
+      <div class="content-jurusan">{{ jurusan}}</div>
+      <div class="row" style="margin-top: 50px">
+        <div style="width: 70%">
+          <div>
+            <img src="{{qrcode}}" alt="" srcset="">
+          </div>
+        </div>
+        <div style="width: 30%">
+          {{ titimangsa }}
+            <div>
+              Kepala Sekolah
+            </div>
+            <div style="margin-top: 30px">
+              TTD
+            </div>
+            <div style="margin-top: 30px">
+              {{ namakepalasekolah }}
+            </div>
+            <div>
+              NIP. {{ nipkepalasekolah }}
+            </div>
+          <div>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        CATATAN PENTING :
+        <ol>
+          <li>Daftar Ulang / Lapor Diri mulai tanggal 5  s.d 7  Juli 2022 ,pukul 08.00 s.d 13.00 WIB setiap hari kerja</li>
+          <li>Bukti cetak hasil penerimaan dan wajib  di serahkan dalam persyaratan lainnya lihat informasi di website sekolah {{ url }}   </li>
+          <li>Bagi siswa yang dinyatakan diterima dan TIDAK MENDAFTAR ULANG sampai batas akhir yang telah ditentukan dianggap MENGUNDURKAN DIRI</li>
+        </ol>
+
+      </div>
+    </div>
+
+</body>
+
+</html>
+
+<style>
+  .title{
+    text-align: center;
+    font-size: 12px;
+    font-weight: 900
+  }
+  .content{
+    margin-top: 50px;
+    font-size: 12px;
+    text-align: justify
+  }
+  .content-jurusan{
+    margin-top: 30px;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+  }
+  .table{
+    width: 100%;
+    padding: 0px;
+    border-spacing: 0px
+  }
+  .tr, td{
+    border: 1px black solid;
+    padding: 5px;
+  }
+  .tr-lulus{
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold
+  }
+  .container-ttd{
+    flex-direction: column
+  }
+  /* Clear floats after the columns */
+  .row {
+            display: flex
+        }
+</style>
