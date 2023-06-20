@@ -156,15 +156,15 @@ class AppController {
         },
 
         { title: "PPDB", type: "subheader", route: "/" },
+        // {
+        //   title: "Verifkasi Peserta",
+        //   icon: "how_to_reg",
+        //   route: "/backend/verifikasi-index",
+        //   type: "item",
+        // },
         {
-          title: "Verifkasi Peserta",
+          title: "Daftar Peserta",
           icon: "how_to_reg",
-          route: "/backend/verifikasi-index",
-          type: "item",
-        },
-        {
-          title: "Terverifikasi",
-          icon: "verified",
           route: "/backend/verified-index",
           type: "item",
         },
@@ -174,12 +174,12 @@ class AppController {
           route: "/backend/olahnilai-jurusan",
           type: "item",
         },
-        {
-          title: "Pendaftaran",
-          icon: "follow_the_signs",
-          route: "/peserta/pendaftaran",
-          type: "item",
-        },
+        // {
+        //   title: "Pendaftaran",
+        //   icon: "follow_the_signs",
+        //   route: "/peserta/pendaftaran",
+        //   type: "item",
+        // },
         /**
         { title: "DAFTAR ULANG", type: "subheader", route: "/" },
         {

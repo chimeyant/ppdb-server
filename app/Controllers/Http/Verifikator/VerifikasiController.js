@@ -19,6 +19,8 @@ const got = use("got");
 const FormData = use("form-data");
 var dateFormat = require("dateformat");
 const Axios = use("axios");
+const Helpers = use("Helpers");
+const Excel = require("exceljs");
 
 /**
  * Resourceful controller for interacting with verifikasis
@@ -1377,6 +1379,152 @@ class VerifikasiController {
    * @param {Response} ctx.response
    */
   async destroy({ params, request, response }) {}
+
+  /**
+   * Import Function
+   * @param {*} param0
+   * @returns
+   */
+
+  async import({ request, response }) {
+    const { file_excel } = request.all();
+
+    const rules = {
+      file_excel: "required",
+    };
+
+    const messages = {
+      "file_excel.required": "File Excel harus dipilih terlebih dahulu",
+    };
+
+    const Validation = await validate(request.all(), rules, messages);
+
+    if (Validation.fails()) {
+      const msg = await Validation.messages();
+      return response.json({
+        status: false,
+        message: msg[0].message,
+      });
+    }
+
+    try {
+      //proses import datawc
+      const filexls = Helpers.publicPath("uploads/datas/") + file_excel;
+      var workbook = new Excel.Workbook();
+      workbook = await workbook.xlsx.readFile(filexls);
+      const worksheet = workbook.getWorksheet("Sheet1");
+
+      let colId = worksheet.getColumn("A");
+
+      const datas = [];
+
+      //loop data
+      let i = 0;
+      colId.eachCell(async (cell, rowNumber) => {
+        if (Number(rowNumber) > 1) {
+          let jalur_pendaftaran = 1;
+          let nomor_register = worksheet.getCell("B" + rowNumber).value;
+          let tanggal_register = dateFormat(
+            Date(worksheet.getCell("N" + rowNumber).value),
+            "yyyy-mm-dd"
+          );
+
+          //cari jurusan id pilihan pertama
+          let excel_jurusan_1 =
+            worksheet.getCell("AE" + rowNumber).value == undefined
+              ? ""
+              : worksheet.getCell("AE" + rowNumber).value;
+
+          let jurusan1;
+          if (excel_jurusan_1 != "") {
+            jurusan1 = await ProgramKeahlian.query()
+              .where("name", excel_jurusan_1)
+              .first();
+          }
+
+          let excel_pil_2 = worksheet.getCell("AF" + rowNumber).value;
+
+          let jurusan2;
+
+          if (excel_pil_2) {
+            jurusan2 = await ProgramKeahlian.query()
+              .where("name", excel_pil_2)
+              .first();
+          }
+
+          let daerah_asal = worksheet.getCell("K" + rowNumber).value;
+          let nama_sekolah_asal = worksheet.getCell("H" + rowNumber).value;
+          let nama = worksheet.getCell("G" + rowNumber).value;
+          let nisn = worksheet.getCell("D" + rowNumber).value;
+          let nik = worksheet.getCell("M" + rowNumber).value;
+          let nama_ayah = worksheet.getCell("L" + rowNumber).value;
+          let nama_ibu = worksheet.getCell("L" + rowNumber).value;
+          let nilai_rapor = worksheet.getCell("AD" + rowNumber).value;
+          let nomor_hp = worksheet.getCell("J" + rowNumber).value;
+
+          const row = {};
+          row["jalur_pendaftaran"] = jalur_pendaftaran;
+          row["nomor_register"] = nomor_register;
+          row["tanggal_register"] = tanggal_register;
+          row["jurusan_id_1"] = jurusan1.id;
+          row["jurusan_id_2"] = jurusan2 ? jurusan2.id : null;
+          row["daerah_asal"] = daerah_asal;
+          row["nama_sekolah_asal"] = nama_sekolah_asal;
+          row["nama"] = nama;
+          row["nisn"] = nisn;
+          row["nik"] = nik;
+          row["nama_ayah"] = nama_ayah;
+          row["nama_ibu"] = nama_ibu;
+          row["nilai_rapor"] = nilai_rapor;
+          row["nomor_hp"] = nomor_hp;
+          row["verifikasi_status"] = 4;
+
+          const peserta = new Peserta();
+          peserta.jalur_pendaftaran = jalur_pendaftaran;
+          peserta.nomor_register = nomor_register;
+          peserta.tanggal_register = tanggal_register;
+          peserta.jurusan_id_1 = jurusan1.id;
+          peserta.jurusan_id_2 = jurusan2 ? jurusan2.id : null;
+          peserta.daerah_asal = daerah_asal;
+          peserta.nama_sekolah_asal = nama_sekolah_asal;
+          peserta.nama = nama;
+          peserta.nisn = nisn;
+          peserta.nik = nik;
+          peserta.nama_ayah = nama_ayah;
+          peserta.nama_ibu = nama_ibu;
+          peserta.nilai_rapor = nilai_rapor;
+          peserta.nomor_hp = nomor_hp;
+          peserta.verifikasi_status = 4;
+          await peserta.save();
+
+          // //simpan ke data user
+          const user = new User();
+          user.username = nama;
+          user.email = nisn;
+          user.password = nik;
+          user.authent = "peserta";
+          user.status = true;
+          user.peserta_id = peserta.id;
+          user.jurusan_id = jurusan1.id;
+          user.telepon = nomor_hp;
+          await user.save();
+        }
+      });
+
+      return response.json({
+        status: true,
+        message: "Proses import data peserta berhasil..",
+        data: datas,
+      });
+    } catch (error) {
+      return response.json({
+        status: false,
+        message: "Opps..., terjadi kesalahan",
+        data: [],
+        error: error,
+      });
+    }
+  }
 }
 
 module.exports = VerifikasiController;

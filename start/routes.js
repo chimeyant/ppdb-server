@@ -240,6 +240,10 @@ Route.group(() => {
     "verified-download",
     "Verifikator/VerifikasiController.downloadExcel"
   ).middleware(["auth"]);
+  Route.post(
+    "import-data-peserta",
+    "Verifikator/VerifikasiController.import"
+  ).middleware(["auth"]);
 
   /**
    * Route Master Soal

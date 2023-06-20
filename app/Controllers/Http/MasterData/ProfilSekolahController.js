@@ -7,6 +7,7 @@ const Env = use("Env");
 
 const ProfilSekolah = use("App/Models/ProfilSekolah");
 const Peserta = use("App/Models/Peserta");
+const User = use("App/Models/User");
 const { validate } = use("Validator");
 
 var dateFormat = require("dateformat");
@@ -349,6 +350,8 @@ class ProfilSekolahController {
 
     if (user.authent == "administrator") {
       await Peserta.query().delete();
+
+      await User.query().where("authent", "peserta").delete();
 
       return response.json({
         status: true,
