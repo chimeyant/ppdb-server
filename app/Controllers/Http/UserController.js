@@ -1,7 +1,7 @@
 "use strict";
 
 const User = use("App/Models/User");
-//const Peserta = use("App/Models/Peserta");
+const Peserta = use("App/Models/Peserta");
 const { validate } = use("Validator");
 const Mail = use("Mail");
 const Env = use("Env");
@@ -321,6 +321,40 @@ class UserController {
       return response.json({
         status: false,
         message: "Opps...terjadi kesalahan " + error,
+      });
+    }
+  }
+
+  async generateAccount({ request, response, uath }) {
+    try {
+      //load data peserta
+      const pesertas = await Peserta.query().orderBy("nama", "asc").fetch();
+
+      const datas = [];
+
+      pesertas.rows.forEach((element) => {
+        const row = {};
+        row["username"] = element.nama;
+        row["email"] = element.nisn;
+        row["password"] = element.nik;
+        row["authent"] = "peserta";
+        row["peserta_id"] = element.id;
+        row["telepon"] = element.nomor_hp;
+        row["status"] = true;
+        datas.push(row);
+      });
+
+      await User.createMany(datas);
+
+      return response.status(200).json({
+        status: true,
+        message: "Proses generate user berhasil",
+      });
+    } catch (error) {
+      return response.status(500).json({
+        status: false,
+        message: "Opps.., terjadi kesalahan",
+        error: error,
       });
     }
   }
