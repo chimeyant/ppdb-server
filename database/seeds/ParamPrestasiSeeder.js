@@ -38,7 +38,7 @@ class ParamPrestasiSeeder {
         skor: 25,
       },
       {
-        name: "Juara 2 Tingkat Provinsi",
+        name: "Juara 1 Tingkat Provinsi",
         skor: 30,
       },
       {
