@@ -1432,9 +1432,9 @@ class VerifikasiController {
 
           //cari jurusan id pilihan pertama
           let excel_jurusan_1 =
-            worksheet.getCell("AG" + rowNumber).value == undefined
+            worksheet.getCell("AO" + rowNumber).value == undefined
               ? ""
-              : worksheet.getCell("AG" + rowNumber).value;
+              : worksheet.getCell("AO" + rowNumber).value;
 
           let jurusan1;
           if (excel_jurusan_1 != "") {
@@ -1443,7 +1443,7 @@ class VerifikasiController {
               .first();
           }
 
-          let excel_pil_2 = worksheet.getCell("AH" + rowNumber).value;
+          let excel_pil_2 = worksheet.getCell("AP" + rowNumber).value;
 
           let jurusan2;
 
@@ -1453,17 +1453,21 @@ class VerifikasiController {
               .first();
           }
 
-          let daerah_asal = worksheet.getCell("K" + rowNumber).value;
-          let nama_sekolah_asal = worksheet.getCell("H" + rowNumber).value;
+          let daerah_asal = worksheet.getCell("U" + rowNumber).value;
+          let nama_sekolah_asal = worksheet.getCell("R" + rowNumber).value;
           let nama = worksheet.getCell("G" + rowNumber).value;
+          let jeniskelamin = worksheet.getCell("H" + rowNumber).value;
+          let tempatlahir = worksheet.getCell("I" + rowNumber).value;
+          let tanggallahir = worksheet.getCell("J" + rowNumber).value;
           let nisn = worksheet.getCell("D" + rowNumber).value;
-          let nik = worksheet.getCell("M" + rowNumber).value;
-          let nama_ayah = worksheet.getCell("L" + rowNumber).value;
-          let nama_ibu = worksheet.getCell("L" + rowNumber).value;
-          let nilai_rapor = worksheet.getCell("AD" + rowNumber).value;
-          let nomor_hp = worksheet.getCell("J" + rowNumber).value;
-          let afirmasi = worksheet.getCell("AE" + rowNumber).value;
-          let prestasi = worksheet.getCell("AF" + rowNumber).value;
+          let nik = worksheet.getCell("W" + rowNumber).value;
+          let nama_ayah = worksheet.getCell("V" + rowNumber).value;
+          let nama_ibu = worksheet.getCell("V" + rowNumber).value;
+          let nilai_rapor = worksheet.getCell("AK" + rowNumber).value;
+          let nomor_hp = worksheet.getCell("T" + rowNumber).value;
+          let afirmasi = worksheet.getCell("AL" + rowNumber).value;
+          let prestasi = worksheet.getCell("AM" + rowNumber).value;
+          let alamat = worksheet.getCell("K" + rowNumber).value;
 
           const skorprestasi =
             prestasi == "Tidak Memiliki Prestasi"
@@ -1479,6 +1483,10 @@ class VerifikasiController {
           peserta.daerah_asal = daerah_asal;
           peserta.nama_sekolah_asal = nama_sekolah_asal;
           peserta.nama = nama;
+          peserta.jenis_kelamin = jeniskelamin == "Laki-laki" ? "L" : "P";
+          peserta.tempat_lahir = tempatlahir;
+          peserta.tanggal_lahir = tanggallahir;
+          peserta.alamat = alamat;
           peserta.nisn = nisn;
           peserta.nik = nik;
           peserta.nama_ayah = nama_ayah;
