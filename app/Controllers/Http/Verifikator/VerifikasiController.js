@@ -1417,6 +1417,7 @@ class VerifikasiController {
       let colId = worksheet.getColumn("A");
 
       const datas = [];
+      const datausers = [];
 
       //loop data
       let i = 0;
@@ -1485,8 +1486,8 @@ class VerifikasiController {
           peserta.nilai_rapor = nilai_rapor;
           peserta.nomor_hp = nomor_hp;
           peserta.afirmasi_status = afirmasi == "Siswa Afirmasi" ? true : false;
-          // peserta.prestasi_status =
-          //   prestasi == "Tidak Memiliki Prestasi" ? false : true;
+          peserta.prestasi_status =
+            prestasi == "Tidak Memiliki Prestasi" ? false : true;
           // peserta.param_prestasi_id =
           //   prestasi == "Tidak Memiliki Prestasi" ? 0 : skorprestasi.id;
           // peserta.prestasi_nama =
@@ -1494,25 +1495,40 @@ class VerifikasiController {
           // peserta.prestasi_skor =
           //   prestasi == "Tidak Memiliki Prestasi" ? 0 : skorprestasi.skor;
           peserta.verifikasi_status = 4;
-          await peserta.save();
+          peserta.save();
 
-          // //simpan ke data user
-          const user = new User();
-          user.username = nama;
-          user.email = nisn;
-          user.password = nik;
-          user.authent = "peserta";
-          user.status = true;
-          user.peserta_id = peserta.id;
-          user.jurusan_id = jurusan1.id;
-          user.telepon = nomor_hp;
-          await user.save();
+          // // // //simpan ke data user
+          // const row = {};
+          // row["username"] = nama;
+          // row["email"] = nisn;
+          // row["password"] = nik;
+          // row["authent"] = "peserta";
+          // row["status"] = true;
+          // row["peserta_id"] = peserta.id;
+          // row["jurusan_id"] = jurusan1.id;
+          // row["telepon"] = nomor_hp;
+
+          // // await User.create(row);
+
+          // // // const user = new User();
+          // // // user.username = nama;
+          // // // user.email = nisn;
+          // // // user.password = nik;
+          // // // user.authent = "peserta";
+          // // // user.status = true;
+          // // // user.peserta_id = peserta.id;
+          // // // user.jurusan_id = jurusan1.id;
+          // // // user.telepon = nomor_hp;
+          // // // await user.save();
         }
       });
+
+      //await User.createMany(datausers);
 
       return response.json({
         status: true,
         message: "Proses import data peserta berhasil..",
+        data: datausers,
       });
     } catch (error) {
       return response.json({
