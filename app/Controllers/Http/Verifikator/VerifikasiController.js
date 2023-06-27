@@ -1431,9 +1431,9 @@ class VerifikasiController {
 
           //cari jurusan id pilihan pertama
           let excel_jurusan_1 =
-            worksheet.getCell("AE" + rowNumber).value == undefined
+            worksheet.getCell("AG" + rowNumber).value == undefined
               ? ""
-              : worksheet.getCell("AE" + rowNumber).value;
+              : worksheet.getCell("AG" + rowNumber).value;
 
           let jurusan1;
           if (excel_jurusan_1 != "") {
@@ -1442,7 +1442,7 @@ class VerifikasiController {
               .first();
           }
 
-          let excel_pil_2 = worksheet.getCell("AF" + rowNumber).value;
+          let excel_pil_2 = worksheet.getCell("AH" + rowNumber).value;
 
           let jurusan2;
 
@@ -1461,23 +1461,13 @@ class VerifikasiController {
           let nama_ibu = worksheet.getCell("L" + rowNumber).value;
           let nilai_rapor = worksheet.getCell("AD" + rowNumber).value;
           let nomor_hp = worksheet.getCell("J" + rowNumber).value;
+          let afirmasi = worksheet.getCell("AE" + rowNumber).value;
+          let prestasi = worksheet.getCell("AF" + rowNumber).value;
 
-          const row = {};
-          row["jalur_pendaftaran"] = jalur_pendaftaran;
-          row["nomor_register"] = nomor_register;
-          row["tanggal_register"] = tanggal_register;
-          row["jurusan_id_1"] = jurusan1.id;
-          row["jurusan_id_2"] = jurusan2 ? jurusan2.id : null;
-          row["daerah_asal"] = daerah_asal;
-          row["nama_sekolah_asal"] = nama_sekolah_asal;
-          row["nama"] = nama;
-          row["nisn"] = nisn;
-          row["nik"] = nik;
-          row["nama_ayah"] = nama_ayah;
-          row["nama_ibu"] = nama_ibu;
-          row["nilai_rapor"] = nilai_rapor;
-          row["nomor_hp"] = nomor_hp;
-          row["verifikasi_status"] = 4;
+          const skorprestasi =
+            prestasi == "Tidak Memiliki Prestasi"
+              ? null
+              : await ParamPrestasi.query().where("name", prestasi).first();
 
           const peserta = new Peserta();
           peserta.jalur_pendaftaran = jalur_pendaftaran;
@@ -1494,6 +1484,15 @@ class VerifikasiController {
           peserta.nama_ibu = nama_ibu;
           peserta.nilai_rapor = nilai_rapor;
           peserta.nomor_hp = nomor_hp;
+          peserta.afirmasi_status = afirmasi == "Siswa Afirmasi" ? true : false;
+          peserta.prestasi_status =
+            prestasi == "Tidak Memiliki Prestasi" ? false : true;
+          peserta.param_prestasi_id =
+            prestasi == "Tidak Memiliki Prestasi" ? 0 : skorprestasi.id;
+          peserta.prestasi_nama =
+            prestasi == "Tidak Memiliki Prestasi" ? 0 : skorprestasi.name;
+          peserta.prestasi_skor =
+            prestasi == "Tidak Memiliki Prestasi" ? 0 : skorprestasi.skor;
           peserta.verifikasi_status = 4;
           await peserta.save();
 
@@ -1514,7 +1513,6 @@ class VerifikasiController {
       return response.json({
         status: true,
         message: "Proses import data peserta berhasil..",
-        data: datas,
       });
     } catch (error) {
       return response.json({
