@@ -1464,10 +1464,10 @@ class VerifikasiController {
           let afirmasi = worksheet.getCell("AE" + rowNumber).value;
           let prestasi = worksheet.getCell("AF" + rowNumber).value;
 
-          const skorprestasi =
-            prestasi == "Tidak Memiliki Prestasi"
-              ? null
-              : await ParamPrestasi.query().where("name", prestasi).first();
+          // const skorprestasi =
+          //   prestasi == "Tidak Memiliki Prestasi"
+          //     ? null
+          //     : await ParamPrestasi.query().where("name", prestasi).first();
 
           const peserta = new Peserta();
           peserta.jalur_pendaftaran = jalur_pendaftaran;
@@ -1485,14 +1485,14 @@ class VerifikasiController {
           peserta.nilai_rapor = nilai_rapor;
           peserta.nomor_hp = nomor_hp;
           peserta.afirmasi_status = afirmasi == "Siswa Afirmasi" ? true : false;
-          peserta.prestasi_status =
-            prestasi == "Tidak Memiliki Prestasi" ? false : true;
-          peserta.param_prestasi_id =
-            prestasi == "Tidak Memiliki Prestasi" ? 0 : skorprestasi.id;
-          peserta.prestasi_nama =
-            prestasi == "Tidak Memiliki Prestasi" ? 0 : skorprestasi.name;
-          peserta.prestasi_skor =
-            prestasi == "Tidak Memiliki Prestasi" ? 0 : skorprestasi.skor;
+          // peserta.prestasi_status =
+          //   prestasi == "Tidak Memiliki Prestasi" ? false : true;
+          // peserta.param_prestasi_id =
+          //   prestasi == "Tidak Memiliki Prestasi" ? 0 : skorprestasi.id;
+          // peserta.prestasi_nama =
+          //   prestasi == "Tidak Memiliki Prestasi" ? 0 : skorprestasi.name;
+          // peserta.prestasi_skor =
+          //   prestasi == "Tidak Memiliki Prestasi" ? 0 : skorprestasi.skor;
           peserta.verifikasi_status = 4;
           await peserta.save();
 
