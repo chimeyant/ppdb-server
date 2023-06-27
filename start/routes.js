@@ -79,6 +79,9 @@ Route.group(() => {
   ).middleware(["auth"]);
 
   Route.resource("user", "UserController").middleware(["auth"]);
+  Route.post("generate-account", "UserController.generateAccount").middleware([
+    "auth",
+  ]);
   Route.get("user-info", "UserController.userInfo").middleware(["auth"]);
   Route.get("menus", "AppController.menus").middleware(["auth"]);
   Route.post("chngpwd", "UserController.chngpwd").middleware(["auth"]);
