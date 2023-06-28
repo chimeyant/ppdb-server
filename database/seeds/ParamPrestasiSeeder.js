@@ -46,7 +46,7 @@ class ParamPrestasiSeeder {
         skor: 35,
       },
       {
-        name: "Juara Harapan 2 Tingkat Nasional ",
+        name: "Juara Harapan 2 Tingkat Nasional",
         skor: 40,
       },
       {
