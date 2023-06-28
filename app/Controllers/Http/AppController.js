@@ -472,13 +472,13 @@ class AppController {
           icon: "mdi-view-dashboard",
           route: "/peserta/dashboard",
         },
-        { title: "PPDB", type: "subheader", route: "/" },
-        {
-          title: "Pendaftaran",
-          icon: "follow_the_signs",
-          route: "/peserta/pendaftaran",
-          type: "item",
-        },
+        // { title: "PPDB", type: "subheader", route: "/" },
+        // {
+        //   title: "Pendaftaran",
+        //   icon: "follow_the_signs",
+        //   route: "/peserta/pendaftaran",
+        //   type: "item",
+        // },
         /**
         {
           title: "Konfirmasi Daftar Ulang",
