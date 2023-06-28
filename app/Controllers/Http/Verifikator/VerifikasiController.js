@@ -1422,7 +1422,6 @@ class VerifikasiController {
       //loop data
       let i = 0;
       colId.eachCell(async (cell, rowNumber) => {
-        console.log(i);
         if (Number(rowNumber) > 1) {
           let jalur_pendaftaran = 1;
           let nomor_register = worksheet.getCell("B" + rowNumber).value;
@@ -1469,6 +1468,8 @@ class VerifikasiController {
           let afirmasi = worksheet.getCell("AL" + rowNumber).value;
           let prestasi = worksheet.getCell("AM" + rowNumber).value;
           let alamat = worksheet.getCell("K" + rowNumber).value;
+
+          console.log(nama);
 
           const skorprestasi =
             prestasi == "Tidak Memiliki Prestasi"
