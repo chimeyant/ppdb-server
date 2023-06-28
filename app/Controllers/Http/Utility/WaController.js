@@ -12,6 +12,7 @@ const Wa = use("App/Models/Wa");
 const Queue = use("Queue");
 const { validate } = use("Validator");
 const Whatsapp = use("App/Helpers/Whatsapp");
+const dateFormat = require("dateformat");
 
 /**
  * Resourceful controller for interacting with was
@@ -38,7 +39,11 @@ class WaController {
       row["name"] = rows.name;
       row["nomor"] = rows.nomor;
       row["jenis_informasi"] =
-        rows.jenis_informasi == "informasi-umum" ? "UMUM" : "DAFTAR ULANG";
+        rows.jenis_informasi == "informasi-umum"
+          ? "UMUM"
+          : rows.jenis_informasi == "informasi-akun"
+          ? "DAFTAR AKUN"
+          : "JADWAL UJIAN";
       row["pesan"] = rows.pesan;
       row["status"] = rows.status;
       datas.push(row);
@@ -373,9 +378,7 @@ class WaController {
           datas.push(data);
         }
 
-        const result = await Whatsapp.sendBulkMessage(datas);
-
-        //kirim pesan wa
+        await Whatsapp.sendBulkMessage(datas);
 
         return response.json({
           status: true,
@@ -389,6 +392,88 @@ class WaController {
         error: error,
       });
     }
+  }
+
+  async sendJadwal({ request, response }) {
+    const { program_keahlian_id, jenis_informasi, pesan } = request.all();
+
+    const rules = {
+      program_keahlian_id: "required",
+      pesan: "required",
+    };
+
+    const messages = {
+      "program_keahlian_id.required": "Program keahlian belum dipilih",
+      "pesan.required": "Pesan tidak boleh kosong",
+    };
+
+    const Validation = await validate(request.all(), rules, messages);
+
+    if (Validation.fails()) {
+      const msg = await Validation.messages();
+      return response.json({
+        status: false,
+        message: msg[0].messaages,
+      });
+    }
+
+    try {
+      const profilsekolah = await ProfilSekolah.query().first();
+      const jurusan = await Jurusan.find(program_keahlian_id);
+
+      const pesertas = await Peserta.query()
+        .with("jadwal_ujian_peserta")
+        .where("jurusan_id_1", program_keahlian_id)
+        .orderBy("id", "asc")
+        .fetch();
+
+      const datas = [];
+
+      if (pesertas) {
+        for (let i in pesertas.rows) {
+          const rows = pesertas.rows[i];
+          const jadwal = await rows.jadwal_ujian_peserta().first();
+
+          const wa = new Wa();
+          wa.nomor_register = rows.nomor_register;
+          wa.jenis_informasi = jenis_informasi;
+          wa.name = rows.nama + " (" + jurusan.singkat + ") ";
+          wa.nomor = rows.nomor_hp;
+          wa.pesan = pesan;
+          wa.status = true;
+          await wa.save();
+
+          const formatpesan =
+            "*" +
+            profilsekolah.nama +
+            "* \r\n `Informasi PPDB Tahun 2023/2024` \r\n\r\nHalo... \r\n" +
+            rows.nama +
+            "\r\n\r\nBerikut kami sampaikan jadwal ujian masuk anda akan dilaksanakan pada :" +
+            "\r\nTanggal :  " +
+            dateFormat(jadwal.tanggal, "dd/mm/yyyy") +
+            "\r\nJam :  " +
+            jadwal.jam_mulai +
+            " s.d " +
+            jadwal.jam_selesai +
+            " WIBB" +
+            " \r\n\r\nUntuk informasi selanjutnya tentang tes masuk silahkan kunjungi situs " +
+            profilsekolah.url +
+            " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2023/2024";
+
+          const data = {};
+          data["recieveNumber"] = rows.nomor_hp;
+          data["message"] = formatpesan;
+          datas.push(data);
+        }
+
+        await Whatsapp.sendBulkMessage(datas);
+
+        return response.json({
+          status: true,
+          message: "Proses Kirim  Pesan Berhasil",
+        });
+      }
+    } catch (error) {}
   }
 
   sleep(time) {
