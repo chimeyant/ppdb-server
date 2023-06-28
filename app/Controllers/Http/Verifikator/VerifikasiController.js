@@ -1422,6 +1422,7 @@ class VerifikasiController {
       //loop data
       let i = 0;
       colId.eachCell(async (cell, rowNumber) => {
+        console.log(i);
         if (Number(rowNumber) > 1) {
           let jalur_pendaftaran = 1;
           let nomor_register = worksheet.getCell("B" + rowNumber).value;
@@ -1504,30 +1505,7 @@ class VerifikasiController {
             prestasi == "Tidak Memiliki Prestasi" ? 0 : skorprestasi.skor;
           peserta.verifikasi_status = 4;
           peserta.save();
-
-          // // // //simpan ke data user
-          // const row = {};
-          // row["username"] = nama;
-          // row["email"] = nisn;
-          // row["password"] = nik;
-          // row["authent"] = "peserta";
-          // row["status"] = true;
-          // row["peserta_id"] = peserta.id;
-          // row["jurusan_id"] = jurusan1.id;
-          // row["telepon"] = nomor_hp;
-
-          // // await User.create(row);
-
-          // // // const user = new User();
-          // // // user.username = nama;
-          // // // user.email = nisn;
-          // // // user.password = nik;
-          // // // user.authent = "peserta";
-          // // // user.status = true;
-          // // // user.peserta_id = peserta.id;
-          // // // user.jurusan_id = jurusan1.id;
-          // // // user.telepon = nomor_hp;
-          // // // await user.save();
+          console.log(i++);
         }
       });
 
