@@ -69,9 +69,9 @@ class SendPengumuman {
       if (profilsekolah.sms) {
         //wa baru
         const msg = {
-          apikey: profilsekolah.apikey,
-          nomor: peserta.nomor_hp,
-          pesan:
+          apiKey: profilsekolah.apikey,
+          recieveNumber: peserta.nomor_hp,
+          message:
             "*INFORMASI PPDB 2022/2023* " +
             profilsekolah.nama +
             " . *" +
@@ -86,7 +86,7 @@ class SendPengumuman {
             " *TETAP DIRUMAH AJA*",
         };
 
-        await Axios.post("http://api.senderwa.com/api/v2/send-wa", msg);
+        await Axios.post("https://api.senderwa.com/api/v2/send-wa", msg);
 
         await Peserta.query()
           .where("id", peserta.id)

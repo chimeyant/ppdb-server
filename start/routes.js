@@ -373,6 +373,10 @@ Route.group(() => {
   Route.resource("utility-wa", `Utility/WaController`).middleware(["auth"]);
   Route.post("utility-kirim-informasi", "Utility/WaController.kiriminformasi");
   Route.post(
+    "utility-send-bulk-message-account",
+    "Utility/WaController.sendBroadcastAccount"
+  );
+  Route.post(
     "utility-wa-kirim-ulang",
     "Utility/WaController.kirimulang"
   ).middleware(["auth"]);

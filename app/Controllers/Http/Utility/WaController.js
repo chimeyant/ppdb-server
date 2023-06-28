@@ -11,6 +11,7 @@ const SendWa = use("App/Jobs/Producers/SendWa");
 const Wa = use("App/Models/Wa");
 const Queue = use("Queue");
 const { validate } = use("Validator");
+const Whatsapp = use("App/Helpers/Whatsapp");
 
 /**
  * Resourceful controller for interacting with was
@@ -246,34 +247,45 @@ class WaController {
     }
 
     try {
+      const profilsekolah = await ProfilSekolah.query().first();
       const jurusan = await Jurusan.find(program_keahlian_id);
 
-      const pesertas1 = await Peserta.query()
+      const pesertas = await Peserta.query()
         .where("jurusan_id_1", program_keahlian_id)
-        .where("kelulusan_pil_1_status", true)
         .orderBy("id", "asc")
-
         .fetch();
 
-      if (pesertas1) {
-        for (let i in pesertas1.rows) {
-          const rows = pesertas1.rows[i];
+      const datas = [];
+
+      if (pesertas) {
+        for (let i in pesertas.rows) {
+          const rows = pesertas.rows[i];
           const wa = new Wa();
           wa.nomor_register = rows.nomor_register;
           wa.jenis_informasi = jenis_informasi;
           wa.name = rows.nama + " (" + jurusan.singkat + ") ";
           wa.nomor = rows.nomor_hp;
           wa.pesan = pesan;
-          wa.status = false;
+          wa.status = true;
           await wa.save();
+
+          const formatpesan =
+            "*" +
+            profilsekolah.nama +
+            "* \r\n `Informasi PPDB Tahun 2023/2024` \r\n\r\nHalo... \r\n" +
+            rows.nama +
+            "\r\n\r\n" +
+            pesan +
+            " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2023/2024";
+
+          const data = {};
+          data["recieveNumber"] = rows.nomor_hp;
+          data["message"] = formatpesan;
+
+          datas.push(data);
         }
 
-        const jmlrecord = await Wa.query().where("status", false).getCount();
-
-        let job;
-        job = new SendWa({ data: "Sending" });
-
-        Queue.dispatch(job, "every 3 seconds");
+        const result = await Whatsapp.sendBulkMessage(datas);
 
         return response.json({
           status: true,
@@ -289,6 +301,92 @@ class WaController {
       return response.json({
         status: false,
         message: "Opps..., terjadi kesalahan",
+      });
+    }
+  }
+
+  async sendBroadcastAccount({ request, response }) {
+    const { program_keahlian_id, jenis_informasi, pesan } = request.all();
+
+    const rules = {
+      program_keahlian_id: "required",
+      jenis_informasi: "required",
+      pesan: "required",
+    };
+
+    const messages = {
+      "program_keahlian_id.required": "Program keahlian belum dipilih",
+      "pesan.required": "Pesan tidak boleh kosong",
+      "jenis_informasi.required": "Jenis informasi harus di isi",
+    };
+
+    const Validation = await validate(request.all(), rules, messages);
+
+    if (Validation.fails()) {
+      const msg = await Validation.messages();
+      return response.json({
+        status: false,
+        message: msg[0].messaages,
+      });
+    }
+
+    try {
+      const profilsekolah = await ProfilSekolah.query().first();
+      const jurusan = await Jurusan.find(program_keahlian_id);
+
+      const pesertas = await Peserta.query()
+        .where("jurusan_id_1", program_keahlian_id)
+        .orderBy("nama", "asc")
+        .fetch();
+
+      if (pesertas) {
+        const datas = [];
+        for (let i in pesertas.rows) {
+          const rows = pesertas.rows[i];
+          const wa = new Wa();
+          wa.nomor_register = rows.nisn;
+          wa.jenis_informasi = jenis_informasi;
+          wa.name = rows.nama + " (" + jurusan.singkat + ") ";
+          wa.nomor = rows.nomor_hp;
+          wa.pesan = pesan;
+          wa.status = true;
+          await wa.save();
+
+          const formatpesan =
+            "*" +
+            profilsekolah.nama +
+            "* \r\n `Informasi PPDB Tahun 2023/2024` \r\n\r\nHalo... \r\n" +
+            rows.nama +
+            "\r\n\r\nSelamat Anda telah terdaftar sebagai akun pengguna pada sistem kami dengan data akun sebagai berikut :" +
+            "\r\nNomor Peserta :  " +
+            rows.nisn +
+            "\r\nKata Sandi :  " +
+            rows.nik +
+            " \r\n\r\nUntuk informasi selanjutnya tentang tes masuk silahkan kunjungi situs " +
+            profilsekolah.url +
+            " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2023/2024";
+
+          const data = {};
+          data["recieveNumber"] = rows.nomor_hp;
+          data["message"] = formatpesan;
+
+          datas.push(data);
+        }
+
+        const result = await Whatsapp.sendBulkMessage(datas);
+
+        //kirim pesan wa
+
+        return response.json({
+          status: true,
+          message: "Proses Kirim  Pesan Berhasil",
+        });
+      }
+    } catch (error) {
+      return response.status(500).json({
+        status: false,
+        message: "Opps..., terjadi kesalahan ",
+        error: error,
       });
     }
   }

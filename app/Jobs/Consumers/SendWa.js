@@ -76,10 +76,10 @@ class SendWa {
           //wa yang baru
           if (wa.jenis_informasi == "informasi-umum") {
             const msg = {
-              apikey: profilsekolah.apikey,
-              nomor: wa.nomor,
-              pesan:
-                "*INFORMASI PPDB 2022/2023*  " +
+              apiKey: profilsekolah.apikey,
+              recieveNumber: wa.nomor,
+              message:
+                "*INFORMASI PPDB 2023/2024*  " +
                 profilsekolah.nama +
                 " . *" +
                 wa.nomor_register +
@@ -89,7 +89,10 @@ class SendWa {
                 wa.pesan,
             };
 
-            await Axios.post("http://api.senderwa.com/api/v2/send-wa", msg);
+            await Axios.post(
+              "https://api.senderwa.com/api/v2/send-message",
+              msg
+            );
 
             const was = await Wa.find(wa.id);
             was.status = true;
@@ -100,10 +103,10 @@ class SendWa {
 
           if (wa.jenis_informasi == "informasi-daftar-ulang") {
             const msg = {
-              apikey: profilsekolah.apikey,
-              nomor: wa.nomor,
-              pesan:
-                "*INFORMASI DAFTAR ULANG 2022/2023* " +
+              apiKey: profilsekolah.apikey,
+              recieveNumber: wa.nomor,
+              message:
+                "*INFORMASI DAFTAR ULANG 2023/2024* " +
                 profilsekolah.nama +
                 " . *" +
                 wa.nomor_register +
@@ -113,7 +116,10 @@ class SendWa {
                 wa.pesan,
             };
 
-            await Axios.post("http://api.senderwa.com/api/v2/send-wa", msg);
+            await Axios.post(
+              "https://api.senderwa.com/api/v2/send-message",
+              msg
+            );
 
             const was = await Wa.find(wa.id);
             was.status = true;
