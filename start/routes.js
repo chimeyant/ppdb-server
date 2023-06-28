@@ -376,6 +376,7 @@ Route.group(() => {
     "utility-send-bulk-message-account",
     "Utility/WaController.sendBroadcastAccount"
   );
+  Route.post("utility-send-jadwal", "Utility/WaController.sendJadwal");
   Route.post(
     "utility-wa-kirim-ulang",
     "Utility/WaController.kirimulang"
