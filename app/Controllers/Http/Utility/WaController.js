@@ -362,15 +362,16 @@ class WaController {
             profilsekolah.nama +
             "* \r\n `Informasi PPDB Tahun 2023/2024` \r\n\r\nHalo... \r\n" +
             rows.nama +
-            "\r\n\r\nSelamat Anda telah terdaftar sebagai akun pengguna pada sistem kami dengan data akun sebagai berikut :" +
+            "\r\n\r\nInformasi untuk tes minat bakat calon siswa baru silahkan kunjungi situs :" +
+            "\r\n" +
+            profilsekolah.url +
+            "\r\n\r\nUntuk login aplikasi silahkan menggunakan akun berikut :" +
             "\r\n\r\nNomor Peserta :  " +
             rows.nisn +
             " (Nomor Peserta) " +
             "\r\nKata Sandi :  " +
             rows.nik +
             " (NIK Peserta)" +
-            " \r\n\r\ninformasi untuk tes minat bakat calon siswa baru silahkan kunjungi situs " +
-            profilsekolah.url +
             " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2023/2024";
 
           const data = {};
