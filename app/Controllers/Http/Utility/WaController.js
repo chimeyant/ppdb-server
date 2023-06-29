@@ -479,6 +479,87 @@ class WaController {
     } catch (error) {}
   }
 
+  async sendJadwalSimulasi({ request, response }) {
+    const { program_keahlian_id, jenis_informasi, pesan } = request.all();
+
+    const rules = {
+      program_keahlian_id: "required",
+      pesan: "required",
+    };
+
+    const messages = {
+      "program_keahlian_id.required": "Program keahlian belum dipilih",
+      "pesan.required": "Pesan tidak boleh kosong",
+    };
+
+    const Validation = await validate(request.all(), rules, messages);
+
+    if (Validation.fails()) {
+      const msg = await Validation.messages();
+      return response.json({
+        status: false,
+        message: msg[0].messaages,
+      });
+    }
+
+    try {
+      const profilsekolah = await ProfilSekolah.query().first();
+      const jurusan = await Jurusan.find(program_keahlian_id);
+
+      const pesertas = await Peserta.query()
+        .with("jadwal_ujian_peserta")
+        .where("jurusan_id_1", program_keahlian_id)
+        .orderBy("id", "asc")
+        .fetch();
+
+      const datas = [];
+
+      if (pesertas) {
+        for (let i in pesertas.rows) {
+          const rows = pesertas.rows[i];
+          const jadwal = await rows.jadwal_ujian_peserta().first();
+
+          const wa = new Wa();
+          wa.nomor_register = rows.nomor_register;
+          wa.jenis_informasi = jenis_informasi;
+          wa.name = rows.nama + " (" + jurusan.singkat + ") ";
+          wa.nomor = rows.nomor_hp;
+          wa.pesan = pesan;
+          wa.status = true;
+          await wa.save();
+
+          const formatpesan =
+            "*" +
+            profilsekolah.nama +
+            "* \r\n `Informasi PPDB Tahun 2023/2024` \r\n\r\nHalo... \r\n" +
+            rows.nama +
+            "\r\n\r\nInformasi untuk tes simulasi bakat calon siswa baru akan dilaksanakan pada :" +
+            "\r\n\r\nTanggal :  " +
+            dateFormat(jadwal.tanggal, "dd/mm/yyyy") +
+            "\r\nWaktu : Pukul " +
+            jadwal.jam_mulai +
+            " s.d Pukul " +
+            jadwal.jam_selesai +
+            " WIB" +
+            " \r\nTempat : Rumah masing-masing " +
+            " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2023/2024";
+
+          const data = {};
+          data["recieveNumber"] = rows.nomor_hp;
+          data["message"] = formatpesan;
+          datas.push(data);
+        }
+
+        await Whatsapp.sendBulkMessage(datas);
+
+        return response.json({
+          status: true,
+          message: "Proses Kirim  Pesan Berhasil",
+        });
+      }
+    } catch (error) {}
+  }
+
   sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
   }

@@ -378,6 +378,10 @@ Route.group(() => {
   );
   Route.post("utility-send-jadwal", "Utility/WaController.sendJadwal");
   Route.post(
+    "utility-send-jadwal-simulasi",
+    "Utility/WaController.sendJadwalSimulasi"
+  );
+  Route.post(
     "utility-wa-kirim-ulang",
     "Utility/WaController.kirimulang"
   ).middleware(["auth"]);
