@@ -363,11 +363,13 @@ class WaController {
             "* \r\n `Informasi PPDB Tahun 2023/2024` \r\n\r\nHalo... \r\n" +
             rows.nama +
             "\r\n\r\nSelamat Anda telah terdaftar sebagai akun pengguna pada sistem kami dengan data akun sebagai berikut :" +
-            "\r\nNomor Peserta :  " +
+            "\r\n\r\nNomor Peserta :  " +
             rows.nisn +
+            " (Nomor Peserta) " +
             "\r\nKata Sandi :  " +
             rows.nik +
-            " \r\n\r\nUntuk informasi selanjutnya tentang tes masuk silahkan kunjungi situs " +
+            " (NIK Peserta)" +
+            " \r\n\r\ninformasi untuk tes minat bakat calon siswa baru silahkan kunjungi situs " +
             profilsekolah.url +
             " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2023/2024";
 
@@ -448,16 +450,16 @@ class WaController {
             profilsekolah.nama +
             "* \r\n `Informasi PPDB Tahun 2023/2024` \r\n\r\nHalo... \r\n" +
             rows.nama +
-            "\r\n\r\nBerikut kami sampaikan jadwal ujian masuk anda akan dilaksanakan pada :" +
-            "\r\nTanggal :  " +
+            "\r\n\r\nInformasi untuk tes bakat calon siswa baru akan dilaksanakan pada :" +
+            "\r\n\r\nTanggal :  " +
             dateFormat(jadwal.tanggal, "dd/mm/yyyy") +
-            "\r\nJam :  " +
+            "\r\nWaktu : Pukul " +
             jadwal.jam_mulai +
-            " s.d " +
+            " s.d Pukul " +
             jadwal.jam_selesai +
-            " WIBB" +
-            " \r\n\r\nUntuk informasi selanjutnya tentang tes masuk silahkan kunjungi situs " +
-            profilsekolah.url +
+            " WIB" +
+            " \r\nTempat : Gedung  " +
+            profilsekolah.nama +
             " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2023/2024";
 
           const data = {};
