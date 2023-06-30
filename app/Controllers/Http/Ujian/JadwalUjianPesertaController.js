@@ -263,7 +263,7 @@ class JadwalUjianPesertaController {
         .delete();
 
       await Peserta.query()
-        .whereIn(id, pesertaid)
+        .whereIn("id", pesertaid)
         .update({ ujian_status: true });
 
       await JadwalUjianPeserta.query()
