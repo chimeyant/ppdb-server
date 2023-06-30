@@ -171,8 +171,6 @@ class JadwalUjianPesertaController {
         .orderBy("id", "asc")
         .fetch();
 
-      console.log(pesertas);
-
       for (let i in pesertas.rows) {
         const rows = pesertas.rows[i];
 
