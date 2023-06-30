@@ -129,6 +129,7 @@ class JadwalUjianPesertaController {
 
   async generate({ request, response }) {
     const { tanggal, jadwal_ujian_sesi_id } = request.all();
+    console.log("OKE");
 
     try {
       //cari ketersediaan jadwal
