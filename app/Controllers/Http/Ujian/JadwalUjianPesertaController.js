@@ -243,6 +243,9 @@ class JadwalUjianPesertaController {
 
         const rowjadwalujianid = rows.jadwal_ujian_id;
 
+        row_peserta_id = Number(rowpesertaid);
+        row_jadwal_ujian_id = Number(rowjadwalujianid);
+
         pesertaid.push(Number(rowpesertaid));
         jadwalujianid.push(Number(rowjadwalujianid));
 
