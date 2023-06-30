@@ -181,7 +181,7 @@ class DashboardController {
     const user = await auth.user;
 
     //cari tanggal sekarang
-    var date = await new Date();
+    var date = new Date();
     var current_date = dateFormat(new Date(), "yyyy-mm-dd");
     var current_time = dateFormat(date.getTime(), "HH:MM:ss");
 
@@ -209,16 +209,16 @@ class DashboardController {
       row["jam_mulai"] = rows.jam_mulai;
       row["jam_selesai"] = rows.jam_selesai;
       //row["aktif"] = rows.jadwal_ujian_sesi_id == 2 ? false : false;
-      row["aktif"] =
-        dateFormat(rows.tanggal, "yyyy-mm-dd") == current_date
-          ? this.timeStringToFloat(rows.jam_mulai) <=
-            this.timeStringToFloat(current_time)
-            ? this.timeStringToFloat(row.jam_selesai) >=
-              this.timeStringToFloat(current_time)
-              ? true
-              : false
-            : false
-          : false;
+      row["aktif"] = true;
+      // dateFormat(rows.tanggal, "yyyy-mm-dd") == current_date
+      //   ? this.timeStringToFloat(rows.jam_mulai) <=
+      //     this.timeStringToFloat(current_time)
+      //     ? this.timeStringToFloat(row.jam_selesai) >=
+      //       this.timeStringToFloat(current_time)
+      //       ? true
+      //       : false
+      //     : false
+      //   : false;
 
       datas.push(row);
     }
