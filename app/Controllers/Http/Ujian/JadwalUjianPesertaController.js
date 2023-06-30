@@ -255,7 +255,7 @@ class JadwalUjianPesertaController {
         //   .update({ ujian_status: false, nilai_teori: 0 });
       }
 
-      return pesertaid;
+      return jadwalujianid;
 
       await JadwalUjianHasil.query()
         .whereIn("jadwal_ujian_id", jadwalujianid)
