@@ -211,7 +211,7 @@ class JadwalUjianPesertaController {
 
       return response.json({
         status: true,
-        message: "Proses pembuatan jadwal ujian peserta berhasil oke",
+        message: "Proses pembuatan jadwal ujian peserta berhasil...",
       });
     } catch (error) {
       return response.json({
