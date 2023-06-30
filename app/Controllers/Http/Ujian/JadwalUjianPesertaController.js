@@ -150,8 +150,6 @@ class JadwalUjianPesertaController {
         .where("jadwal_ujian_sesi_id", jadwal_ujian_sesi_id)
         .getCount();
 
-      console.log(jmlpeserta);
-
       if (jmlpeserta > 0) {
         return response.json({
           status: false,
@@ -172,6 +170,8 @@ class JadwalUjianPesertaController {
         .limit(limit_sesi)
         .orderBy("id", "asc")
         .fetch();
+
+      console.log(pesertas);
 
       for (let i in pesertas.rows) {
         const rows = pesertas.rows[i];
