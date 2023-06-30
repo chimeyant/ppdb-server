@@ -183,8 +183,6 @@ class JadwalUjianPesertaController {
         //cari sesi
         const sesi = await JadwalUjianSesi.find(jadwal_ujian_sesi_id);
 
-        console, lod(sesi);
-
         if (jadwalujian) {
           const jadwalujianpeserta = new JadwalUjianPeserta();
           jadwalujianpeserta.jadwal_ujian_id = jadwalujian.id;
