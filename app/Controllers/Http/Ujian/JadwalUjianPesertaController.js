@@ -209,8 +209,6 @@ class JadwalUjianPesertaController {
             .where("id", rows.id)
             .update({ ujian_status: true, nilai_teori: 0 });
         }
-
-        console.log(rows.id);
       }
 
       return response.json({
