@@ -238,12 +238,12 @@ class JadwalUjianPesertaController {
         const rows = jup.rows[i];
 
         //ha[us dari daftar ujian hasil
-        const rowpesertid = {};
+        const rowpesertaid = {};
         rowpesertaid["id"] = rows.peserta_id;
 
         const rowjadwalujianid = rows.jadwal_ujian_id;
 
-        pesertaid.push(rowpesertid);
+        pesertaid.push(rowpesertaid);
         jadwalujianid.push(rowjadwalujianid);
 
         /**
