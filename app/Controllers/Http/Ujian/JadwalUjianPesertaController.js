@@ -237,7 +237,7 @@ class JadwalUjianPesertaController {
       for (let i in jup.rows) {
         const rows = jup.rows[i];
 
-        pesertaid.push(rows.peserta_id);
+        pesertaid.push(Number(rows.peserta_id));
         jadwalujianid.push(rows.jadwal_ujian_id);
 
         /**
