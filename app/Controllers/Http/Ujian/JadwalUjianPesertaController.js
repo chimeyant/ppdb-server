@@ -257,8 +257,6 @@ class JadwalUjianPesertaController {
 
       const jadwal_ujian_id = jadwalujianid[0];
 
-      return jadwal_ujian_id;
-
       await JadwalUjianHasil.query()
         .where("jadwal_ujian_id", jadwal_ujian_id)
         .whereIn("peserta_id", pesertaid)
