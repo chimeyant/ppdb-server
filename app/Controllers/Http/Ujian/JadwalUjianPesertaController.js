@@ -237,7 +237,7 @@ class JadwalUjianPesertaController {
       for (let i in jup.rows) {
         const rows = jup.rows[i];
 
-        pesertaid.push(Number(rows.peserta_id));
+        pesertaid.push(rows.peserta_id);
         jadwalujianid.push(rows.jadwal_ujian_id);
 
         /**
@@ -264,7 +264,7 @@ class JadwalUjianPesertaController {
 
       await Peserta.query()
         .whereIn("id", pesertaid)
-        .update({ ujian_status: true });
+        .update({ ujian_status: false, nilai_teori: 0 });
 
       await JadwalUjianPeserta.query()
         .where("tanggal", dateFormat(tanggal, "yyyy-mm-dd"))
