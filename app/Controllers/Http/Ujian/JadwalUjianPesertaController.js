@@ -237,20 +237,8 @@ class JadwalUjianPesertaController {
       for (let i in jup.rows) {
         const rows = jup.rows[i];
 
-        //ha[us dari daftar ujian hasil
-        const rowpesertaid = {};
-        rowpesertaid["id"] = rows.peserta_id;
-
-        const rowjadwalujianid = rows.jadwal_ujian_id;
-
-        const row_peserta_id = Number(rowpesertaid ? rowpesertaid : 0);
-
-        const row_jadwal_ujian_id = Number(
-          rowjadwalujianid ? row_peserta_id : 0
-        );
-
-        pesertaid.push(row_peserta_id);
-        jadwalujianid.push(row_jadwal_ujian_id);
+        pesertaid.push(rows.peserta_id);
+        jadwalujianid.push(rows.jadwal_ujian_id);
 
         /**
          * Deprecated
