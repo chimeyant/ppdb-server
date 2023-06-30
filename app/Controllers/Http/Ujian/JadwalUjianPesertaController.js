@@ -246,8 +246,8 @@ class JadwalUjianPesertaController {
         row_peserta_id = Number(rowpesertaid);
         row_jadwal_ujian_id = Number(rowjadwalujianid);
 
-        pesertaid.push(Number(rowpesertaid));
-        jadwalujianid.push(Number(rowjadwalujianid));
+        pesertaid.push(row_peserta_id);
+        jadwalujianid.push(row_jadwal_ujian_id);
 
         /**
          * Deprecated
