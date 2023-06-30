@@ -354,8 +354,6 @@ class WaController {
           wa.name = rows.nama + " (" + jurusan.singkat + ") ";
           wa.nomor = rows.nomor_hp;
           wa.pesan = pesan;
-          wa.status = true;
-          await wa.save();
 
           const formatpesan =
             "*" +
@@ -374,18 +372,22 @@ class WaController {
             " (NIK Peserta)" +
             " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2023/2024";
 
-          const data = {};
-          data["recieveNumber"] = rows.nomor_hp;
-          data["message"] = formatpesan;
-
-          datas.push(data);
+          await Whatsapp.sendMessage(rows.nomor_hp, formatpesan).then(
+            async (res) => {
+              if (!res.success) {
+                wa.status = false;
+              } else {
+                wa.status = true;
+              }
+              await wa.save();
+            }
+          );
         }
-
-        await Whatsapp.sendBulkMessage(datas);
 
         return response.json({
           status: true,
           message: "Proses Kirim  Pesan Berhasil",
+          datas: datas,
         });
       }
     } catch (error) {

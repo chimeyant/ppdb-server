@@ -14,7 +14,7 @@ class Whatsapp {
 
       //send whatsapp
       let {
-        data: { code, success, message },
+        data: { code, success, message, errors },
       } = await Axios.post(
         "https://api.senderwa.com/api/v2/send-message",
         payload
@@ -30,6 +30,7 @@ class Whatsapp {
         code: 500,
         success: false,
         message: "Opps...,, terjadi kesalahan",
+        error: error,
       };
     }
   }
@@ -45,11 +46,13 @@ class Whatsapp {
 
       //send bulk message
       let {
-        data: { code, success, message },
+        data: { code, success, message, error },
       } = await Axios.post(
         "https://api.senderwa.com/api/v2/send-bulk-message",
         payload
       );
+
+      console.log(error);
 
       return {
         code: code,
