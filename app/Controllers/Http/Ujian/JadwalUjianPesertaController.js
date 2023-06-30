@@ -255,10 +255,10 @@ class JadwalUjianPesertaController {
         //   .update({ ujian_status: false, nilai_teori: 0 });
       }
 
-      return jadwalujianid;
+      const jadwal_ujian_id = jadwalujianid[0];
 
       await JadwalUjianHasil.query()
-        .whereIn("jadwal_ujian_id", jadwalujianid)
+        .where("jadwal_ujian_id", jadwal_ujian_id)
         .whereIn("peserta_id", pesertaid)
         .delete();
 
