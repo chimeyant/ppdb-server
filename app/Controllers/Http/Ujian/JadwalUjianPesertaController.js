@@ -231,20 +231,44 @@ class JadwalUjianPesertaController {
         .orderBy("id", "asc")
         .fetch();
 
+      const pesertaid = [];
+      const jadwalujianid = [];
+
       for (let i in jup.rows) {
         const rows = jup.rows[i];
 
         //ha[us dari daftar ujian hasil
-        await JadwalUjianHasil.query()
-          .where("jadwal_ujian_id", rows.jadwal_ujian_id)
-          .where("peserta_id", rows.peserta_id)
-          .delete();
+        const rowpesertid = {};
+        rowpesertaid["id"] = rows.peserta_id;
+
+        const rowjadwalujianid = rows.jadwal_ujian_id;
+
+        pesertaid.push(rowpesertid);
+        jadwalujianid.push(rowjadwalujianid);
+
+        /**
+         * Deprecated
+         */
+
+        // await JadwalUjianHasil.query()
+        //   .where("jadwal_ujian_id", rows.jadwal_ujian_id)
+        //   .where("peserta_id", rows.peserta_id)
+        //   .delete();
 
         //update data peserta ujian statu jadi false
-        await Peserta.query()
-          .where("id", rows.peserta_id)
-          .update({ ujian_status: false, nilai_teori: 0 });
+        // await Peserta.query()
+        //   .where("id", rows.peserta_id)
+        //   .update({ ujian_status: false, nilai_teori: 0 });
       }
+
+      await JadwalUjianHasil.query()
+        .whereIn("jadwal_ujian_id", jadwalujianid)
+        .whereIn("peserta_id", pesertaid)
+        .delete();
+
+      await Peserta.query()
+        .whereIn(id, pesertaid)
+        .update({ ujian_status: true });
 
       await JadwalUjianPeserta.query()
         .where("tanggal", dateFormat(tanggal, "yyyy-mm-dd"))
