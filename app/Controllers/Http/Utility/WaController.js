@@ -438,12 +438,17 @@ class WaController {
         for (let i in pesertas.rows) {
           const rows = pesertas.rows[i];
           const jadwal = await rows.jadwal_ujian_peserta().first();
+          const sesi = await jadwal.sesi().first();
+          const phoneNumber = rows.nomor_hp;
+          const phoneNumberFormated = await phoneNumber
+            .replace(/^(\+62)/, "0")
+            .replace(/-/g, "");
 
           const wa = new Wa();
           wa.nomor_register = rows.nomor_register;
           wa.jenis_informasi = jenis_informasi;
           wa.name = rows.nama + " (" + jurusan.singkat + ") ";
-          wa.nomor = rows.nomor_hp;
+          wa.nomor = phoneNumberFormated;
           wa.pesan = pesan;
           wa.status = true;
           await wa.save();
@@ -456,6 +461,8 @@ class WaController {
             "\r\n\r\nInformasi untuk tes bakat calon siswa baru akan dilaksanakan pada :" +
             "\r\n\r\nTanggal :  " +
             dateFormat(jadwal.tanggal, "dd/mm/yyyy") +
+            "\r\nSesi : " +
+            sesi.name +
             "\r\nWaktu : Pukul " +
             jadwal.jam_mulai +
             " s.d Pukul " +
@@ -465,13 +472,17 @@ class WaController {
             profilsekolah.nama +
             " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2023/2024";
 
-          const data = {};
-          data["recieveNumber"] = rows.nomor_hp;
-          data["message"] = formatpesan;
-          datas.push(data);
+          await Whatsapp.sendMessage(phoneNumberFormated, formatpesan).then(
+            async (res) => {
+              if (!res.success) {
+                wa.status = false;
+              } else {
+                wa.status = true;
+              }
+              await wa.save();
+            }
+          );
         }
-
-        await Whatsapp.sendBulkMessage(datas);
 
         return response.json({
           status: true,
