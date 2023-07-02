@@ -118,7 +118,17 @@ class JadwalUjianHasilController {
   }
 
   async createsoals({ request, response, auth }) {
-    const { jadwal_ujian_id } = request.all();
+    const { jadwal_ujian_id, token } = request.all();
+
+    if (token != "GH5CMY") {
+      return response.json({
+        status: false,
+        lanjut: false,
+        tokenstatus: false,
+        message:
+          "Token anda tidak benar, silahkan tanyakan kepada guru pengawas anda...!",
+      });
+    }
 
     try {
       //bind user
@@ -144,6 +154,7 @@ class JadwalUjianHasilController {
         return response.json({
           status: true,
           lanjut: true,
+          tokenstatus: true,
           message: "Soal telah berhasil di buat ",
         });
       }
@@ -220,6 +231,7 @@ class JadwalUjianHasilController {
       return response.json({
         status: true,
         lanjut: true,
+        tokenstatus: true,
         message: "Soal berhasil dibuat",
       });
     } catch (error) {
