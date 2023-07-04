@@ -265,7 +265,7 @@ class JadwalUjianAbsenController {
       //hitung nilai dan update
       absen.jam_keluar = currtime;
       absen.nilai = nilai;
-      absen.status = true;
+      absen.selesai = true;
       await absen.save();
 
       //update nilai teori
