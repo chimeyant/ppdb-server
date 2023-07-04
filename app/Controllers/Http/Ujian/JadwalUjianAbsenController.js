@@ -254,7 +254,6 @@ class JadwalUjianAbsenController {
 
       const absen = await JadwalUjianAbsen.find(id);
 
-      return absen;
       const jadwalUjianId = absen.jadwal_ujian_id;
       const pesertaId = absen.peserta_id;
 
@@ -262,6 +261,8 @@ class JadwalUjianAbsenController {
         .where("jadwal_ujian_id", jadwalUjianId)
         .where("peserta_id", pesertaId)
         .getSum("nilai");
+
+      return nilai;
 
       //hitung nilai dan update
       absen.jam_keluar = currtime;
