@@ -262,12 +262,11 @@ class JadwalUjianAbsenController {
         .where("peserta_id", pesertaId)
         .getSum("nilai");
 
-      return nilai;
-
       //hitung nilai dan update
       absen.jam_keluar = currtime;
       absen.nilai = nilai;
       absen.status = true;
+      await absen.save();
 
       //update nilai teori
       await Peserta.query()
