@@ -209,16 +209,16 @@ class DashboardController {
       row["jam_mulai"] = rows.jam_mulai;
       row["jam_selesai"] = rows.jam_selesai;
       //row["aktif"] = rows.jadwal_ujian_sesi_id == 2 ? false : false;
-      row["aktif"] =
-        dateFormat(rows.tanggal, "yyyy-mm-dd") == current_date
-          ? this.timeStringToFloat(rows.jam_mulai) <=
-            this.timeStringToFloat(current_time)
-            ? this.timeStringToFloat(row.jam_selesai) >=
-              this.timeStringToFloat(current_time)
-              ? true
-              : false
-            : false
-          : false;
+      row["aktif"] = true;
+      // dateFormat(rows.tanggal, "yyyy-mm-dd") == current_date
+      //   ? this.timeStringToFloat(rows.jam_mulai) <=
+      //     this.timeStringToFloat(current_time)
+      //     ? this.timeStringToFloat(row.jam_selesai) >=
+      //       this.timeStringToFloat(current_time)
+      //       ? true
+      //       : false
+      //     : false
+      //   : false;
 
       datas.push(row);
     }

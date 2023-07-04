@@ -120,15 +120,15 @@ class JadwalUjianHasilController {
   async createsoals({ request, response, auth }) {
     const { jadwal_ujian_id, token } = request.all();
 
-    if (token != "CMY212") {
-      return response.json({
-        status: false,
-        lanjut: false,
-        tokenstatus: false,
-        message:
-          "Token anda tidak benar, silahkan tanyakan kepada guru pengawas anda...!",
-      });
-    }
+    // if (token != "CMY212") {
+    //   return response.json({
+    //     status: false,
+    //     lanjut: false,
+    //     tokenstatus: false,
+    //     message:
+    //       "Token anda tidak benar, silahkan tanyakan kepada guru pengawas anda...!",
+    //   });
+    // }
 
     try {
       //bind user
