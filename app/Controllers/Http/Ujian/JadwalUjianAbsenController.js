@@ -3,7 +3,7 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
-const got = use("got");
+
 const JadwalUjianAbsen = use("App/Models/JadwalUjianAbsen");
 const JadwalUjian = use("App/Models/JadwalUjian");
 const Peserta = use("App/Models/Peserta");
@@ -12,7 +12,7 @@ const JadwalUjianSesi = use("App/Models/JadwalUjianSesi");
 const ProfilSekolah = use("App/Models/ProfilSekolah");
 const JadwalUjianPeserta = use("App/Models/JadwalUjianPeserta");
 var dateFormat = require("dateformat");
-const FormData = use("form-data");
+const Database = use("Database");
 const Axios = use("axios");
 
 /**
@@ -242,6 +242,44 @@ class JadwalUjianAbsenController {
       return response.json({
         status: false,
         message: "Opps..., terjadi kesalahan " + error,
+      });
+    }
+  }
+
+  async setselesai({ request, response }) {
+    const { id } = request.all();
+    try {
+      const date = new Date();
+      const currtime = dateFormat(date, "HH:MM:ss");
+
+      const absen = await JadwalUjianAbsen.find(id);
+      const jadwalUjianId = absen.jadwal_ujian_id;
+      const pesertaId = absen.peserta_id;
+
+      const nilai = await Database.from("jadwal_ujian_hasils")
+        .where("jadwal_ujian_id", jadwalUjianId)
+        .where("peserta_id", pesertaId)
+        .getSum("nilai");
+
+      //hitung nilai dan update
+      absen.jam_keluar = currtime;
+      absen.nilai = nilai;
+      absen.status = true;
+
+      //update nilai teori
+      await Peserta.query()
+        .where("id", pesertaId)
+        .update({ nilai_teori: nilai });
+
+      return response.json({
+        status: true,
+        message: "Set Ujian Selesai Berhasil",
+      });
+    } catch (error) {
+      return response.json({
+        status: false,
+        message: "Opps..., terjadi kesalahan",
+        error: error,
       });
     }
   }
