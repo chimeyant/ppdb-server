@@ -253,6 +253,8 @@ class JadwalUjianAbsenController {
       const currtime = dateFormat(date, "HH:MM:ss");
 
       const absen = await JadwalUjianAbsen.find(id);
+
+      return absen;
       const jadwalUjianId = absen.jadwal_ujian_id;
       const pesertaId = absen.peserta_id;
 
