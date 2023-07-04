@@ -325,9 +325,10 @@ Route.group(() => {
     "reset-ujian-private",
     "JadwalUjianAbsenController.resetujian"
   ).middleware(["auth"]);
-  Route.post("set-selesai", "JadwalUjianAbsenController.setselesai").middleware(
-    ["auth"]
-  );
+  Route.post(
+    "set-selesai",
+    "Ujian/JadwalUjianAbsenController.setselesai"
+  ).middleware(["auth"]);
 
   /**
    * Route Olah Nilai
