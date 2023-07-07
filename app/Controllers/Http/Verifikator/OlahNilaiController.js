@@ -788,16 +788,16 @@ class OlahNilaiController {
             (nilai_teori * prosentase_nilai_teori) / 100 +
             (nilai_wawancara * prosentase_nilai_wawancara) / 100;
 
-          const nilai_akhir_prestasi =
-            (rows.prestasi_skor * prosentase_napr) / 100 +
-            (nilai_akhir_umum * prosentase_naum) / 100;
+          // const nilai_akhir_prestasi =
+          //   (rows.prestasi_skor * prosentase_napr) / 100 +
+          //   (nilai_akhir_umum * prosentase_naum) / 100;
 
           //update nilai prestasi
           // const nilai_akhir_prestasi =
           //   (rows.prestasi_skor * 90) / 100 + (nilai_akhir_umum * 50) / 100;
 
-          // const nilai_akhir_prestasi =
-          //   Number(rows.prestasi_skor) + nilai_akhir_umum;
+          const nilai_akhir_prestasi =
+            Number(rows.prestasi_skor) + nilai_akhir_umum;
 
           const nilai_akhir = nilai_akhir_prestasi;
 
@@ -835,48 +835,48 @@ class OlahNilaiController {
         (pagu * Number(param_prestasi.prosentase)) / 100
       );
 
-      //filter data peserta berprestasi
-      const peserta_prestasi = await Peserta.query()
-        .where("jurusan_id_1", id)
-        .whereIn("verifikasi_status", profilsekolah.pesertas)
-        .where("prestasi_status", true)
-        .orderBy("nilai_akhir", "desc")
-        .fetch();
+      // //filter data peserta berprestasi
+      // const peserta_prestasi = await Peserta.query()
+      //   .where("jurusan_id_1", id)
+      //   .whereIn("verifikasi_status", profilsekolah.pesertas)
+      //   .where("prestasi_status", true)
+      //   .orderBy("nilai_akhir", "desc")
+      //   .fetch();
 
-      let jml_prestasi = 0;
-      let temp_prestasi = 0;
-      for (let i in peserta_prestasi.rows) {
-        const rows = peserta_prestasi.rows[i];
+      // let jml_prestasi = 0;
+      // let temp_prestasi = 0;
+      // for (let i in peserta_prestasi.rows) {
+      //   const rows = peserta_prestasi.rows[i];
 
-        const nilai_prestasi = Number(rows.prestasi_skor);
-        const nilai_rapor = Number(rows.nilai_rapor);
-        const nilai_teori = Number(rows.nilai_teori);
-        const nilai_wawancara = Number(rows.nilai_wawancara);
+      //   const nilai_prestasi = Number(rows.prestasi_skor);
+      //   const nilai_rapor = Number(rows.nilai_rapor);
+      //   const nilai_teori = Number(rows.nilai_teori);
+      //   const nilai_wawancara = Number(rows.nilai_wawancara);
 
-        temp_prestasi = temp_prestasi + 1;
-        if (temp_prestasi <= pagu_prestasi) {
-          //update syayus lulus
-          const model = await Peserta.find(rows.id);
-          model.kelulusan_pil_1_status = true;
-          model.prioritas = "PRESTASI";
-          await model.save();
-          jml_prestasi = jml_prestasi + 1;
-        } else {
-          const nilai_akhir =
-            (nilai_rapor * prosentase_rapor) / 100 +
-            (nilai_teori * prosentase_nilai_teori) / 100 +
-            (nilai_wawancara * prosentase_nilai_wawancara) / 100;
+      //   temp_prestasi = temp_prestasi + 1;
+      //   if (temp_prestasi <= pagu_prestasi) {
+      //     //update syayus lulus
+      //     const model = await Peserta.find(rows.id);
+      //     model.kelulusan_pil_1_status = false;
+      //     model.prioritas = "PRESTASI";
+      //     await model.save();
+      //     jml_prestasi = jml_prestasi + 1;
+      //   } else {
+      //     const nilai_akhir =
+      //       (nilai_rapor * prosentase_rapor) / 100 +
+      //       (nilai_teori * prosentase_nilai_teori) / 100 +
+      //       (nilai_wawancara * prosentase_nilai_wawancara) / 100;
 
-          const model = await Peserta.find(rows.id);
+      //     const model = await Peserta.find(rows.id);
 
-          model.kelulusan_pil_1_status = false;
-          model.prioritas = "Log Prestasi";
-          model.prestasi_status = false;
-          model.nilai_akhir = nilai_akhir;
+      //     model.kelulusan_pil_1_status = false;
+      //     model.prioritas = "Prestasi";
+      //     model.prestasi_status = false;
+      //     model.nilai_akhir = nilai_akhir;
 
-          await model.save();
-        }
-      }
+      //     await model.save();
+      //   }
+      // }
 
       /**
        * Bagian Afirmasi
@@ -953,6 +953,7 @@ class OlahNilaiController {
         if (temp_umum <= pagu_umum) {
           const model = await Peserta.find(rows.id);
           model.kelulusan_pil_1_status = true;
+          model.prioritas = model.prestasi_status ? "PRESTASI" : "";
           await model.save();
           jml_umum = jml_umum + 1;
         }
