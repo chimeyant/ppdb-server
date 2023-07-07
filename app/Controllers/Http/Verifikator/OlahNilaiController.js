@@ -789,7 +789,7 @@ class OlahNilaiController {
             (nilai_wawancara * prosentase_nilai_wawancara) / 100;
 
           const nilai_akhir_prestasi =
-            (rows.prestasi_skor * 80) / 100 + (nilai_akhir_umum * 20) / 100;
+            (rows.prestasi_skor * 10) / 100 + (nilai_akhir_umum * 90) / 100;
 
           //update nilai prestasi
           // const nilai_akhir_prestasi =
