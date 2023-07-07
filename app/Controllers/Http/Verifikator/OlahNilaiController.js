@@ -788,13 +788,13 @@ class OlahNilaiController {
             (nilai_teori * prosentase_nilai_teori) / 100 +
             (nilai_wawancara * prosentase_nilai_wawancara) / 100;
 
-          // const nilai_akhir_prestasi =
-          //   (rows.prestasi_skor * prosentase_napr) / 100 +
-          //   (nilai_akhir_umum * prosentase_naum) / 100;
+          const nilai_akhir_prestasi =
+            (rows.prestasi_skor * prosentase_napr) / 100 +
+            (nilai_akhir_umum * prosentase_naum) / 100;
 
           //update nilai prestasi
-          const nilai_akhir_prestasi =
-            (rows.prestasi_skor * 50) / 100 + (nilai_akhir_umum * 50) / 100;
+          // const nilai_akhir_prestasi =
+          //   (rows.prestasi_skor * 90) / 100 + (nilai_akhir_umum * 50) / 100;
 
           // const nilai_akhir_prestasi =
           //   Number(rows.prestasi_skor) + nilai_akhir_umum;
