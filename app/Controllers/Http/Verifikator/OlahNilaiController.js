@@ -923,15 +923,15 @@ class OlahNilaiController {
        */
 
       //cari jml sisa
-      let jml_sisa =
-        pagu_prestasi - jml_prestasi + (pagu_afirmasi - jml_afirmasi);
+      // let jml_sisa =
+      //   pagu_prestasi - jml_prestasi + (pagu_afirmasi - jml_afirmasi);
 
       //cari prosentase jalur umum
       const param_umum = await ParamNilai.query().where("kode", "UM").first();
 
       const pagu_umum =
         Number(pagu) -
-        Number(pagu_prestasi) -
+        // Number(pagu_prestasi) -
         Number(pagu_afirmasi) +
         Number(jml_sisa);
 
