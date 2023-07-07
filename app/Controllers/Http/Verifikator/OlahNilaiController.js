@@ -788,9 +788,11 @@ class OlahNilaiController {
             (nilai_teori * prosentase_nilai_teori) / 100 +
             (nilai_wawancara * prosentase_nilai_wawancara) / 100;
 
-          const nilai_akhir_prestasi =
-            (rows.prestasi_skor * prosentase_napr) / 100 +
-            (nilai_akhir_umum * prosentase_naum) / 100;
+          // const nilai_akhir_prestasi =
+          //   (rows.prestasi_skor * prosentase_napr) / 100 +
+          //   (nilai_akhir_umum * prosentase_naum) / 100;
+
+          const nilai_akhir_prestasi = rows.prestasi_skor + nilai_akhir_umum;
 
           const nilai_akhir = nilai_akhir_prestasi;
 
@@ -858,7 +860,6 @@ class OlahNilaiController {
           const nilai_akhir =
             (nilai_rapor * prosentase_rapor) / 100 +
             (nilai_teori * prosentase_nilai_teori) / 100 +
-            nilai_prestasi +
             (nilai_wawancara * prosentase_nilai_wawancara) / 100;
 
           const model = await Peserta.find(rows.id);
