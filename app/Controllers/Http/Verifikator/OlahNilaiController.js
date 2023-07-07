@@ -932,8 +932,8 @@ class OlahNilaiController {
       const pagu_umum =
         Number(pagu) -
         // Number(pagu_prestasi) -
-        Number(pagu_afirmasi) +
-        Number(jml_sisa);
+        Number(pagu_afirmasi);
+      // Number(jml_sisa);
 
       const peserta_umum = await Peserta.query()
         .where("jurusan_id_1", id)
