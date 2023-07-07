@@ -793,7 +793,10 @@ class OlahNilaiController {
           //   (nilai_akhir_umum * prosentase_naum) / 100;
 
           const nilai_akhir_prestasi =
-            Number(rows.prestasi_skor) + nilai_akhir_umum;
+            (rows.prestasi_skor * 50) / 100 + (nilai_akhir_umum * 50) / 100;
+
+          // const nilai_akhir_prestasi =
+          //   Number(rows.prestasi_skor) + nilai_akhir_umum;
 
           const nilai_akhir = nilai_akhir_prestasi;
 
