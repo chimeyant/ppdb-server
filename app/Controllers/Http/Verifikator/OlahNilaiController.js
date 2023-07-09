@@ -657,7 +657,7 @@ class OlahNilaiController {
       const peserta = await Peserta.find(id);
       peserta.prestasi_skor = prestasi_skor;
       peserta.prestasi_status = peserta.status
-        ? prestasi_skor == 0 || prestasi_skor == "0.00"
+        ? prestasi_skor == 0
           ? false
           : true
         : false;
