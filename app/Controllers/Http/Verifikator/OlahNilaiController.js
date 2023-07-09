@@ -662,7 +662,7 @@ class OlahNilaiController {
           : true
         : false;
       peserta.prioritas =
-        prestasi_skor == 0 || prestasi_skor == "0.00" ? "" : peserta.prioritas;
+        prestasi_skor == 0 || prestasi_skor == "0.00" ? "" : "PRESTASI";
       peserta.nilai_rapor = nilai_rapor;
       peserta.nilai_teori = nilai_teori;
       peserta.nilai_wawancara = nilai_wawancara;
