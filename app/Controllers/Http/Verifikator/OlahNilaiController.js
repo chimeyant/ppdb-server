@@ -805,6 +805,7 @@ class OlahNilaiController {
           const model = await Peserta.find(rows.id);
           model.nilai_akhir_umum = nilai_akhir_umum;
           model.nilai_akhir_prestasi = nilai_akhir_prestasi;
+          model.prioritas = "PRESTASI";
           model.nilai_akhir = nilai_akhir;
           await model.save();
         } else {
