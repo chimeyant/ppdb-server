@@ -656,11 +656,8 @@ class OlahNilaiController {
     try {
       const peserta = await Peserta.find(id);
       peserta.prestasi_skor = prestasi_skor;
-      peserta.prestasi_status = peserta.status
-        ? prestasi_skor == 0
-          ? false
-          : true
-        : false;
+      peserta.prestasi_status = prestasi_skor < 1 ? false : true;
+
       peserta.prioritas = Number(prestasi_skor) < 1 ? "" : "PRESTASI";
       peserta.nilai_rapor = nilai_rapor;
       peserta.nilai_teori = nilai_teori;
