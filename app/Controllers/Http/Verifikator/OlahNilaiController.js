@@ -1088,11 +1088,12 @@ class OlahNilaiController {
 
     if (Number(jmlpeserta) >= Number(jmlpagu)) {
       const peserta = await Peserta.query()
-        .where("jurusan_id_1", id)
-        .whereIn("verifikasi_status", profilsekolah.pesertas)
-        .orderBy("kelulusan_pil_1_status", "desc")
-        .orderBy("nilai_akhir", "desc")
-        .orderBy("prioritas", "desc")
+        //.where("jurusan_id_1", id)
+        //.whereIn("verifikasi_status", profilsekolah.pesertas)
+        //.orderBy("kelulusan_pil_1_status", "desc")
+        //.orderBy("nilai_akhir", "desc")
+        //.orderBy("prioritas", "desc")
+        .orderBy("nomor_register", "asc")
         .fetch();
 
       const datas = [];
