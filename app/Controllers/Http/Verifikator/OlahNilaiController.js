@@ -1117,7 +1117,7 @@ class OlahNilaiController {
         var nama = rows.nama;
         row["Nama"] = nama.toUpperCase();
         //row["jenis_kelamin"] = rows.jenis_kelamin;
-        // row["Asal Sekolah"] = rows.nama_sekolah_asal;
+        row["Asal Sekolah"] = rows.nama_sekolah_asal;
         // row["pil1"] = programkeahlian1.singkat;
         // row["np"] = rows.prestasi_skor;
         // row["nr"] = rows.nilai_rapor;
