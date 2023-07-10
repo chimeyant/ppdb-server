@@ -614,6 +614,7 @@ class OlahNilaiController {
     data["order_person_status"] = peserta.order_person_status;
     data["order_person_name"] = peserta.order_person_name;
     data["order_person_date"] = peserta.order_person_date;
+    data["afirmasi_status"] = peserta.afirmasi_status;
 
     return data;
   }
@@ -648,6 +649,7 @@ class OlahNilaiController {
       order_person_status,
       order_person_name,
       prestasi_skor,
+      afirmasi_status,
     } = request.all();
 
     const date = new Date();
@@ -657,7 +659,6 @@ class OlahNilaiController {
       const peserta = await Peserta.find(id);
       peserta.prestasi_skor = prestasi_skor;
       peserta.prestasi_status = prestasi_skor < 1 ? false : true;
-
       peserta.prioritas = Number(prestasi_skor) < 1 ? "" : "PRESTASI";
       peserta.nilai_rapor = nilai_rapor;
       peserta.nilai_teori = nilai_teori;
@@ -665,6 +666,7 @@ class OlahNilaiController {
       peserta.order_person_status = order_person_status;
       peserta.order_person_name = order_person_name;
       peserta.order_person_date = currdate;
+      peserta.afirmasi_status = afirmasi_status ? true : false;
 
       await peserta.save();
 
