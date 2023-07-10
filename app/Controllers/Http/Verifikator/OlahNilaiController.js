@@ -1104,30 +1104,31 @@ class OlahNilaiController {
         const row = {};
 
         num = num + 1;
-        row["num"] = num;
-        row["tanggal_register"] = dateFormat(
-          rows.tanggal_register,
-          "dd/mm/yyyy"
-        );
-        row["no_pendaftaran"] = rows.nomor_register;
-        row["nisn"] = rows.nisn;
+        row["no"] = num;
+        // row["tanggal_register"] = dateFormat(
+        //   rows.tanggal_register,
+        //   "dd/mm/yyyy"
+        // );
+        row["No Ujian"] = rows.nisn;
+        row["No Daftar"] = rows.nomor_register;
+        row["No Fromulir"] = "";
         var nama = rows.nama;
-        row["nama"] = nama.toUpperCase();
-        row["jenis_kelamin"] = rows.jenis_kelamin;
-        row["sekolah"] = rows.nama_sekolah_asal;
-        row["pil1"] = programkeahlian1.singkat;
-        row["np"] = rows.prestasi_skor;
-        row["nr"] = rows.nilai_rapor;
-        row["nt"] = rows.nilai_teori;
-        row["nw"] = rows.nilai_wawancara;
-        row["naum"] = rows.nilai_akhir_umum;
-        row["napr"] = rows.nilai_akhir_prestasi;
-        row["na"] = rows.nilai_akhir;
-        row["status"] = rows.kelulusan_pil_1_status
+        row["Nama"] = nama.toUpperCase();
+        //row["jenis_kelamin"] = rows.jenis_kelamin;
+        // row["Asal Sekolah"] = rows.nama_sekolah_asal;
+        // row["pil1"] = programkeahlian1.singkat;
+        // row["np"] = rows.prestasi_skor;
+        // row["nr"] = rows.nilai_rapor;
+        // row["nt"] = rows.nilai_teori;
+        // row["nw"] = rows.nilai_wawancara;
+        // row["naum"] = rows.nilai_akhir_umum;
+        // row["napr"] = rows.nilai_akhir_prestasi;
+        row["Status Penerimaan"] = rows.kelulusan_pil_1_status
           ? "DITERIMA"
           : "TIDAK DITERIMA";
-        row["order_person_status"] = rows.order_person_status ? "*" : "";
-        row["jalur"] = rows.prioritas;
+        // row["order_person_status"] = rows.order_person_status ? "*" : "";
+        // row["jalur"] = rows.prioritas;
+        row["Nilai"] = rows.nilai_akhir;
 
         datas.push(row);
       }
