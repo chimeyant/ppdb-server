@@ -1109,8 +1109,8 @@ class OlahNilaiController {
         //   rows.tanggal_register,
         //   "dd/mm/yyyy"
         // );
-        row["No Ujian"] = rows.nisn;
-        row["No Daftar"] = rows.nomor_register;
+        row["No Ujian"] = rows.nisn.toString();
+        row["No Daftar"] = rows.nomor_register.toString();
         row["No Formulir"] = "";
         var nama = rows.nama;
         row["Nama"] = nama.toUpperCase();
