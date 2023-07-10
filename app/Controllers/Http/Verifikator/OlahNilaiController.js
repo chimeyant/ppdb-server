@@ -1111,7 +1111,7 @@ class OlahNilaiController {
         // );
         row["No Ujian"] = rows.nisn;
         row["No Daftar"] = rows.nomor_register;
-        row["No Fromulir"] = "";
+        row["No Formulir"] = "";
         var nama = rows.nama;
         row["Nama"] = nama.toUpperCase();
         //row["jenis_kelamin"] = rows.jenis_kelamin;
