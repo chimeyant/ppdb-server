@@ -1104,7 +1104,7 @@ class OlahNilaiController {
         const row = {};
 
         num = num + 1;
-        row["no"] = num;
+        row["No"] = num;
         // row["tanggal_register"] = dateFormat(
         //   rows.tanggal_register,
         //   "dd/mm/yyyy"
