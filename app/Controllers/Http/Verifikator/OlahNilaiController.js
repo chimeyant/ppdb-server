@@ -1109,6 +1109,7 @@ class OlahNilaiController {
           rows.tanggal_register,
           "dd/mm/yyyy"
         );
+        row["no_pendaftaran"] = rows.no_pendaftaran;
         row["nisn"] = rows.nisn;
         var nama = rows.nama;
         row["nama"] = nama.toUpperCase();
@@ -1122,7 +1123,9 @@ class OlahNilaiController {
         row["naum"] = rows.nilai_akhir_umum;
         row["napr"] = rows.nilai_akhir_prestasi;
         row["na"] = rows.nilai_akhir;
-        row["status"] = rows.kelulusan_pil_1_status ? "L" : "TL";
+        row["status"] = rows.kelulusan_pil_1_status
+          ? "DITERIMA"
+          : "TIDAK DITERIMA";
         row["order_person_status"] = rows.order_person_status ? "*" : "";
         row["jalur"] = rows.prioritas;
 
