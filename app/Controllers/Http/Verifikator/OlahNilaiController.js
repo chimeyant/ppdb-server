@@ -1109,7 +1109,7 @@ class OlahNilaiController {
           rows.tanggal_register,
           "dd/mm/yyyy"
         );
-        row["no_pendaftaran"] = rows.no_pendaftaran;
+        row["no_pendaftaran"] = rows.nomor_register;
         row["nisn"] = rows.nisn;
         var nama = rows.nama;
         row["nama"] = nama.toUpperCase();
