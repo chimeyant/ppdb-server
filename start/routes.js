@@ -245,6 +245,9 @@ Route.group(() => {
   ).middleware(["auth"])
 
   //import data peserta;
+  /**
+   * Jalur Import
+   */
   Route.post(
     "import-data-peserta",
     "Verifikator/VerifikasiController.import"
