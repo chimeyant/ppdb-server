@@ -42,8 +42,8 @@ class WaController {
         rows.jenis_informasi == "informasi-umum"
           ? "UMUM"
           : rows.jenis_informasi == "informasi-akun"
-          ? "DAFTAR AKUN"
-          : "JADWAL UJIAN";
+            ? "DAFTAR AKUN"
+            : "JADWAL UJIAN";
       row["pesan"] = rows.pesan;
       row["status"] = rows.status;
       datas.push(row);
@@ -61,7 +61,7 @@ class WaController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create({ request, response, view }) {}
+  async create({ request, response, view }) { }
 
   /**
    * Create/save a new wa.
@@ -181,7 +181,7 @@ class WaController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response, view }) { }
 
   /**
    * Render a form to update an existing wa.
@@ -192,7 +192,7 @@ class WaController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit({ params, request, response, view }) {}
+  async edit({ params, request, response, view }) { }
 
   /**
    * Update wa details.
@@ -202,7 +202,7 @@ class WaController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response }) { }
 
   /**
    * Delete a wa with id.
@@ -277,11 +277,11 @@ class WaController {
           const formatpesan =
             "*" +
             profilsekolah.nama +
-            "* \r\n `Informasi PPDB Tahun 2023/2024` \r\n\r\nHalo... \r\n" +
+            "* \r\n `Informasi PPDB Tahun 2024/2025` \r\n\r\nHalo... \r\n" +
             rows.nama +
             "\r\n\r\n" +
             pesan +
-            " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2023/2024";
+            " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2024/2025";
 
           const data = {};
           data["recieveNumber"] = rows.nomor_hp;
@@ -358,7 +358,7 @@ class WaController {
           const formatpesan =
             "*" +
             profilsekolah.nama +
-            "* \r\n `Informasi PPDB Tahun 2023/2024` \r\n\r\nHalo... \r\n" +
+            "* \r\n `Informasi PPDB Tahun 2024/2025` \r\n\r\nHalo... \r\n" +
             rows.nama +
             "\r\n\r\nInformasi untuk tes minat bakat calon siswa baru silahkan kunjungi situs :" +
             "\r\n" +
@@ -370,7 +370,7 @@ class WaController {
             "\r\nKata Sandi :  " +
             rows.nik +
             " (NIK Peserta)" +
-            " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2023/2024";
+            " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2024/2025";
 
           await Whatsapp.sendMessage(rows.nomor_hp, formatpesan).then(
             async (res) => {
@@ -456,7 +456,7 @@ class WaController {
           const formatpesan =
             "*" +
             profilsekolah.nama +
-            "* \r\n `Informasi PPDB Tahun 2023/2024` \r\n\r\nHalo... \r\n" +
+            "* \r\n `Informasi PPDB Tahun 2024/2025` \r\n\r\nHalo... \r\n" +
             rows.nama +
             "\r\n\r\nInformasi untuk tes bakat calon siswa baru akan dilaksanakan pada :" +
             "\r\n\r\nTanggal :  " +
@@ -470,7 +470,7 @@ class WaController {
             " WIB" +
             " \r\nTempat : Gedung  " +
             profilsekolah.nama +
-            " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2023/2024";
+            " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2024/2025";
 
           await Whatsapp.sendMessage(phoneNumberFormated, formatpesan).then(
             async (res) => {
@@ -489,7 +489,7 @@ class WaController {
           message: "Proses Kirim  Pesan Berhasil",
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async sendJadwalSimulasi({ request, response }) {
@@ -544,7 +544,7 @@ class WaController {
           const formatpesan =
             "*" +
             profilsekolah.nama +
-            "* \r\n `Informasi PPDB Tahun 2023/2024` \r\n\r\nHalo... \r\n" +
+            "* \r\n `Informasi PPDB Tahun 2024/2025` \r\n\r\nHalo... \r\n" +
             rows.nama +
             "\r\n\r\nInformasi untuk tes simulasi bakat calon siswa baru akan dilaksanakan pada :" +
             "\r\n\r\nTanggal :  " +
@@ -555,7 +555,7 @@ class WaController {
             jadwal.jam_selesai +
             " WIB" +
             " \r\nTempat : Rumah masing-masing " +
-            " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2023/2024";
+            " \r\n\r\nSalam, SMK Pasti Bisa \r\n\r\nPanitia PPDB 2024/2025";
 
           await Whatsapp.sendMessage(rows.nomor_hp, formatpesan).then(
             async (res) => {
@@ -574,7 +574,7 @@ class WaController {
           message: "Proses Kirim  Pesan Berhasil",
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   sleep(time) {
