@@ -242,7 +242,9 @@ Route.group(() => {
   Route.post(
     "verified-download",
     "Verifikator/VerifikasiController.downloadExcel"
-  ).middleware(["auth"]);
+  ).middleware(["auth"])
+
+  //import data peserta;
   Route.post(
     "import-data-peserta",
     "Verifikator/VerifikasiController.import"
