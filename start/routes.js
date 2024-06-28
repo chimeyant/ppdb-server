@@ -279,6 +279,8 @@ Route.group(() => {
   /**
    * Route Jadwal Ujian
    */
+  //masukan Route Jadwal Ujian
+
   Route.resource(
     "jadwal-ujian-sesi",
     "Ujian/JadwalUjianSesiController"
@@ -296,6 +298,7 @@ Route.group(() => {
     "jadwal-ujian-peserta/:tanggal/:jadwal_ujian_sesi_id",
     "Ujian/JadwalUjianPesertaController"
   ).middleware(["auth"]);
+  //ini jdawal ujia peserta generate
   Route.post(
     "jadwal-ujian-peserta-generate",
     "Ujian/JadwalUjianPesertaController.generate"
