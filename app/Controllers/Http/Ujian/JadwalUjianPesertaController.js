@@ -73,7 +73,7 @@ class JadwalUjianPesertaController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create({ request, response, view }) {}
+  async create({ request, response, view }) { }
 
   /**
    * Create/save a new jadwalujianpeserta.
@@ -83,7 +83,7 @@ class JadwalUjianPesertaController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {}
+  async store({ request, response }) { }
 
   /**
    * Display a single jadwalujianpeserta.
@@ -94,7 +94,7 @@ class JadwalUjianPesertaController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response, view }) { }
 
   /**
    * Render a form to update an existing jadwalujianpeserta.
@@ -105,7 +105,7 @@ class JadwalUjianPesertaController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit({ params, request, response, view }) {}
+  async edit({ params, request, response, view }) { }
 
   /**
    * Update jadwalujianpeserta details.
@@ -115,7 +115,7 @@ class JadwalUjianPesertaController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response }) { }
 
   /**
    * Delete a jadwalujianpeserta with id.
@@ -125,100 +125,100 @@ class JadwalUjianPesertaController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({ params, request, response }) { }
 
   async generate({ request, response }) {
     const { tanggal, jadwal_ujian_sesi_id } = request.all();
 
-    try {
-      //cari ketersediaan jadwal
-      const jmlujian = await JadwalUjian.query()
-        .where("tanggal", dateFormat(tanggal, "yyyy-mm-dd"))
-        .getCount();
+    // try {
+    //cari ketersediaan jadwal
+    const jmlujian = await JadwalUjian.query()
+      .where("tanggal", dateFormat(tanggal, "yyyy-mm-dd"))
+      .getCount();
 
-      if (jmlujian < 1) {
-        return response.json({
-          status: false,
-          message:
-            "Opp..., tidak ditemukan jadwal ujian pada tanggal tersebut ",
-        });
-      }
-
-      //cari jadwal ujian peserta
-      const jmlpeserta = await JadwalUjianPeserta.query()
-        .where("tanggal", dateFormat(tanggal, "yyyy-mm-dd"))
-        .where("jadwal_ujian_sesi_id", jadwal_ujian_sesi_id)
-        .getCount();
-
-      if (jmlpeserta > 0) {
-        return response.json({
-          status: false,
-          message: "Jadwal ujian peserta telah tersedia",
-        });
-      }
-
-      //cari limitasi ujian per sesi
-      const profilsekolah = await ProfilSekolah.query().first();
-
-      const pesertas_status = profilsekolah.pesertas;
-      const limit_sesi = Number(profilsekolah.limit_sesi);
-
-      //ambil pesertas ujian
-      const pesertas = await Peserta.query()
-        .whereIn("verifikasi_status", pesertas_status)
-        .where("ujian_status", false)
-        .limit(limit_sesi)
-        .orderBy("id", "asc")
-        .fetch();
-
-      for (let i in pesertas.rows) {
-        const rows = pesertas.rows[i];
-
-        //cari jadwal
-        const jadwalujian = await JadwalUjian.query()
-          .where("tanggal", tanggal)
-          .where("program_keahlian_id", rows.jurusan_id_1)
-          .first();
-
-        //cari sesi
-        const sesi = await JadwalUjianSesi.find(jadwal_ujian_sesi_id);
-
-        if (jadwalujian) {
-          const jadwalujianpeserta = new JadwalUjianPeserta();
-          jadwalujianpeserta.jadwal_ujian_id = jadwalujian.id;
-          jadwalujianpeserta.jadwal_ujian_sesi_id = sesi.id;
-          jadwalujianpeserta.peserta_id = rows.id;
-          jadwalujianpeserta.tanggal = dateFormat(tanggal, "yyyy-mm-dd");
-          jadwalujianpeserta.jam_mulai = sesi.jam_mulai;
-          jadwalujianpeserta.jam_selesai = sesi.jam_selesai;
-          jadwalujianpeserta.waktu = jadwalujian.waktu;
-          await jadwalujianpeserta.save();
-
-          const jadwalujianabsen = new JadwalUjianAbsen();
-          jadwalujianabsen.jadwal_ujian_id = jadwalujian.id;
-          jadwalujianabsen.jadwal_ujian_sesi_id = sesi.id;
-          jadwalujianabsen.peserta_id = rows.id;
-          jadwalujianabsen.tanggal = dateFormat(tanggal, "yyyy-mm-dd");
-          jadwalujianabsen.time_left = jadwalujian.waktu;
-          await jadwalujianabsen.save();
-
-          //update peserta statu ujian
-          await Peserta.query()
-            .where("id", rows.id)
-            .update({ ujian_status: true, nilai_teori: 0 });
-        }
-      }
-
-      return response.json({
-        status: true,
-        message: "Proses pembuatan jadwal ujian peserta berhasil...",
-      });
-    } catch (error) {
+    if (jmlujian < 1) {
       return response.json({
         status: false,
-        message: "Opps..., terjadi kesalahan " + error,
+        message:
+          "Opp..., tidak ditemukan jadwal ujian pada tanggal tersebut ",
       });
     }
+
+    //cari jadwal ujian peserta
+    const jmlpeserta = await JadwalUjianPeserta.query()
+      .where("tanggal", dateFormat(tanggal, "yyyy-mm-dd"))
+      .where("jadwal_ujian_sesi_id", jadwal_ujian_sesi_id)
+      .getCount();
+
+    if (jmlpeserta > 0) {
+      return response.json({
+        status: false,
+        message: "Jadwal ujian peserta telah tersedia",
+      });
+    }
+
+    //cari limitasi ujian per sesi
+    const profilsekolah = await ProfilSekolah.query().first();
+
+    const pesertas_status = profilsekolah.pesertas;
+    const limit_sesi = Number(profilsekolah.limit_sesi);
+
+    //ambil pesertas ujian
+    const pesertas = await Peserta.query()
+      .whereIn("verifikasi_status", pesertas_status)
+      .where("ujian_status", false)
+      .limit(limit_sesi)
+      .orderBy("id", "asc")
+      .fetch();
+
+    for (let i in pesertas.rows) {
+      const rows = pesertas.rows[i];
+
+      //cari jadwal
+      const jadwalujian = await JadwalUjian.query()
+        .where("tanggal", tanggal)
+        .where("program_keahlian_id", rows.jurusan_id_1)
+        .first();
+
+      //cari sesi
+      const sesi = await JadwalUjianSesi.find(jadwal_ujian_sesi_id);
+
+      if (jadwalujian) {
+        const jadwalujianpeserta = new JadwalUjianPeserta();
+        jadwalujianpeserta.jadwal_ujian_id = jadwalujian.id;
+        jadwalujianpeserta.jadwal_ujian_sesi_id = sesi.id;
+        jadwalujianpeserta.peserta_id = rows.id;
+        jadwalujianpeserta.tanggal = dateFormat(tanggal, "yyyy-mm-dd");
+        jadwalujianpeserta.jam_mulai = sesi.jam_mulai;
+        jadwalujianpeserta.jam_selesai = sesi.jam_selesai;
+        jadwalujianpeserta.waktu = jadwalujian.waktu;
+        await jadwalujianpeserta.save();
+
+        const jadwalujianabsen = new JadwalUjianAbsen();
+        jadwalujianabsen.jadwal_ujian_id = jadwalujian.id;
+        jadwalujianabsen.jadwal_ujian_sesi_id = sesi.id;
+        jadwalujianabsen.peserta_id = rows.id;
+        jadwalujianabsen.tanggal = dateFormat(tanggal, "yyyy-mm-dd");
+        jadwalujianabsen.time_left = jadwalujian.waktu;
+        await jadwalujianabsen.save();
+
+        //update peserta statu ujian
+        await Peserta.query()
+          .where("id", rows.id)
+          .update({ ujian_status: true, nilai_teori: 0 });
+      }
+    }
+
+    return response.json({
+      status: true,
+      message: "Proses pembuatan jadwal ujian peserta berhasil...",
+    });
+    // } catch (error) {
+    //   return response.json({
+    //     status: false,
+    //     message: "Opps..., terjadi kesalahan " + error,
+    //   });
+    // }
   }
 
   async reset({ request, response, auth }) {
