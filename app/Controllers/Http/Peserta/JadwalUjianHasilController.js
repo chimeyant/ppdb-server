@@ -26,7 +26,7 @@ class JadwalUjianHasilController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) {}
+  async index({ request, response, view }) { }
 
   /**
    * Render a form to be used for creating a new jadwalujianhasil.
@@ -37,7 +37,7 @@ class JadwalUjianHasilController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create({ request, response, view }) {}
+  async create({ request, response, view }) { }
 
   /**
    * Create/save a new jadwalujianhasil.
@@ -47,7 +47,7 @@ class JadwalUjianHasilController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {}
+  async store({ request, response }) { }
 
   /**
    * Display a single jadwalujianhasil.
@@ -58,7 +58,7 @@ class JadwalUjianHasilController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response, view }) { }
 
   /**
    * Render a form to update an existing jadwalujianhasil.
@@ -69,7 +69,7 @@ class JadwalUjianHasilController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit({ params, request, response, view }) {}
+  async edit({ params, request, response, view }) { }
 
   /**
    * Update jadwalujianhasil details.
@@ -79,7 +79,7 @@ class JadwalUjianHasilController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response }) { }
 
   /**
    * Delete a jadwalujianhasil with id.
@@ -89,7 +89,7 @@ class JadwalUjianHasilController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({ params, request, response }) { }
 
   async fetchInfoStatusUjian({ request, response, auth }) {
     const { jadwal_ujian_id } = request.all();
@@ -120,15 +120,15 @@ class JadwalUjianHasilController {
   async createsoals({ request, response, auth }) {
     const { jadwal_ujian_id, token } = request.all();
 
-    // if (token != "CMY212") {
-    //   return response.json({
-    //     status: false,
-    //     lanjut: false,
-    //     tokenstatus: false,
-    //     message:
-    //       "Token anda tidak benar, silahkan tanyakan kepada guru pengawas anda...!",
-    //   });
-    // }
+    if (token != "SIM-2024") {
+      return response.json({
+        status: false,
+        lanjut: false,
+        tokenstatus: false,
+        message:
+          "Token anda tidak benar, silahkan tanyakan kepada guru pengawas anda...!",
+      });
+    }
 
     try {
       //bind user
