@@ -9,6 +9,7 @@ const User = use("App/Models/User");
 const JadwalUjianPeserta = use("App/Models/JadwalUjianPeserta");
 const JadwalUjian = use("App/Models/JadwalUjian");
 const JadwalUjianSesi = use("App/Models/JadwalUjianSesi")
+const Pengumuman = use("App/Models/Pengumuman")
 const Dokumen = use("App/Models/Dokuman");
 const QRCode = require("qrcode");
 
@@ -116,9 +117,8 @@ class DashboardController {
       "dd-mm-yyyy"
     );
 
-    const pesan = await Pesan.query()
-      .where("to_id", user.id)
-      .orWhere("from_id", user.id)
+    const pesan = await Pengumuman.query()
+      .where("status", true)
       .orderBy("id", "desc")
       .fetch();
 
@@ -131,15 +131,6 @@ class DashboardController {
       row["id"] = rows.id;
       row["title"] = rows.title;
       row["body"] = rows.body;
-      row["dari"] = user.username;
-      row["from_id"] = rows.from_id;
-      row["from_name"] = user.username;
-      row["avatar"] =
-        user.avatar == null
-          ? Env.get("BASE_URL") + "/api/download/logo/" + profilsekolah.logo
-          : Env.get("BASE_URL") + "/api/download/avatar/" + user.avatar;
-      row["status"] = rows.status;
-
       pesans.push(row);
     }
 
