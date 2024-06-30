@@ -128,7 +128,7 @@ class DashboardController {
       const rows = pesan.rows[i];
       const row = {};
       row["id"] = rows.id;
-      row['tanggal'] = dateFormat(rows.updated_at), "dd/MM/yyyy h:m:s"
+      row['tanggal'] = dateFormat(rows.updated_at, "dd/MM/yyyy h:m:s")
       row["title"] = rows.title;
       row["body"] = rows.body;
       pesans.push(row);
