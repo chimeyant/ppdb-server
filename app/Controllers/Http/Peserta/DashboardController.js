@@ -126,7 +126,6 @@ class DashboardController {
 
     for (let i in pesan.rows) {
       const rows = pesan.rows[i];
-      const user = await User.findOrFail(rows.from_id);
       const row = {};
       row["id"] = rows.id;
       row["title"] = rows.title;
