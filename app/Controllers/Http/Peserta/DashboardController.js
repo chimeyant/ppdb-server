@@ -212,7 +212,7 @@ class DashboardController {
               this.timeStringToFloat(current_time)
               ? true
               : false
-            : false
+            : true
           : false;
 
       datas.push(row);
