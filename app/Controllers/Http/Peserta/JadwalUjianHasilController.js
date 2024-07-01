@@ -122,7 +122,7 @@ class JadwalUjianHasilController {
 
     //token
 
-    if (token != "A1945ZV") {
+    if (token != "B1254VBC") {
       return response.json({
         status: false,
         lanjut: false,
