@@ -328,7 +328,7 @@ class UserController {
   async generateAccount({ request, response, uath }) {
     try {
       //load data peserta
-      const pesertas = await Peserta.query().orderBy("nama", "asc").fetch();
+      const pesertas = await Peserta.query().where('nisn', '0091147942').orderBy("nama", "asc").fetch();
 
       const datas = [];
 
