@@ -120,7 +120,7 @@ class JadwalUjianHasilController {
   async createsoals({ request, response, auth }) {
     const { jadwal_ujian_id, token } = request.all();
 
-    //token
+    //token data
 
     if (token != "B1254VBC") {
       return response.json({
