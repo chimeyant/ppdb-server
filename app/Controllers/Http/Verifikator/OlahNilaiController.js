@@ -198,8 +198,8 @@ class OlahNilaiController {
               ? "L"
               : "TL"
             : rows.kelulusan_pil_2_status
-            ? "L"
-            : "TL";
+              ? "L"
+              : "TL";
         row["order_person_status"] = rows.order_person_status;
         row["prioritas"] = rows.prioritas;
 
@@ -246,8 +246,8 @@ class OlahNilaiController {
               ? "L"
               : "TL"
             : rows.kelulusan_pil_2_status
-            ? "L"
-            : "TL";
+              ? "L"
+              : "TL";
         row["order_person_status"] = rows.order_person_status;
         row["prioritas"] = rows.prioritas;
 
@@ -302,8 +302,8 @@ class OlahNilaiController {
               ? "L"
               : "TL"
             : rows.kelulusan_pil_2_status
-            ? "L"
-            : "TL";
+              ? "L"
+              : "TL";
         row["order_person_status"] = rows.order_person_status;
         row["prioritas"] = rows.prioritas;
 
@@ -352,8 +352,8 @@ class OlahNilaiController {
               ? "L"
               : "TL"
             : rows.kelulusan_pil_2_status
-            ? "L"
-            : "TL";
+              ? "L"
+              : "TL";
         row["order_person_status"] = rows.order_person_status;
         row["prioritas"] = rows.prioritas;
 
@@ -402,8 +402,8 @@ class OlahNilaiController {
               ? "L"
               : "TL"
             : rows.kelulusan_pil_2_status
-            ? "L"
-            : "TL";
+              ? "L"
+              : "TL";
         row["order_person_status"] = rows.order_person_status;
         row["prioritas"] = rows.prioritas;
 
@@ -451,8 +451,8 @@ class OlahNilaiController {
               ? "L"
               : "TL"
             : rows.kelulusan_pil_2_status
-            ? "L"
-            : "TL";
+              ? "L"
+              : "TL";
         row["order_person_status"] = rows.order_person_status;
         row["prioritas"] = rows.prioritas;
 
@@ -499,8 +499,8 @@ class OlahNilaiController {
               ? "L"
               : "TL"
             : rows.kelulusan_pil_2_status
-            ? "L"
-            : "TL";
+              ? "L"
+              : "TL";
         row["order_person_status"] = rows.order_person_status;
         row["prioritas"] = rows.prioritas;
 
@@ -548,8 +548,8 @@ class OlahNilaiController {
               ? "L"
               : "TL"
             : rows.kelulusan_pil_2_status
-            ? "L"
-            : "TL";
+              ? "L"
+              : "TL";
         row["order_person_status"] = rows.order_person_status;
         row["prioritas"] = rows.prioritas;
         data.push(row);
@@ -568,7 +568,7 @@ class OlahNilaiController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create({ request, response, view }) {}
+  async create({ request, response, view }) { }
 
   /**
    * Create/save a new olahnilai.
@@ -578,7 +578,7 @@ class OlahNilaiController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {}
+  async store({ request, response }) { }
 
   /**
    * Display a single olahnilai.
@@ -628,7 +628,7 @@ class OlahNilaiController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit({ params, request, response, view }) {}
+  async edit({ params, request, response, view }) { }
 
   /**
    * Update olahnilai details.
@@ -696,7 +696,7 @@ class OlahNilaiController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({ params, request, response }) { }
 
   async jurusan({ request, response }) {
     const jurusan = await ProgramKeahlian.query().orderBy("id", "asc").fetch();
@@ -894,12 +894,12 @@ class OlahNilaiController {
         pagu_afirmasi == 0
           ? []
           : await Peserta.query()
-              .where("jurusan_id_1", id)
-              .whereIn("verifikasi_status", profilsekolah.pesertas)
-              .where("afirmasi_status", true)
-              .where("kelulusan_pil_1_status", false)
-              .orderBy("nilai_akhir", "desc")
-              .fetch();
+            .where("jurusan_id_1", id)
+            .whereIn("verifikasi_status", profilsekolah.pesertas)
+            .where("afirmasi_status", true)
+            .where("kelulusan_pil_1_status", false)
+            .orderBy("nilai_akhir", "desc")
+            .fetch();
 
       let jml_afirmasi = 0;
       let temp_afirmasi = 0;
@@ -1164,12 +1164,12 @@ class OlahNilaiController {
         row["jenis_kelamin"] = rows.jenis_kelamin;
         row["sekolah"] = rows.nama_sekolah_asal;
         row["pil1"] = programkeahlian1.singkat;
-        row["np"] = rows.prestasi_skor;
-        row["nr"] = rows.nilai_rapor;
-        row["nt"] = rows.nilai_teori;
-        row["nw"] = rows.nilai_wawancara;
-        row["naum"] = rows.nilai_akhir_umum;
-        row["napr"] = rows.nilai_akhir_prestasi;
+        // row["np"] = rows.prestasi_skor;
+        // row["nr"] = rows.nilai_rapor;
+        // row["nt"] = rows.nilai_teori;
+        // row["nw"] = rows.nilai_wawancara;
+        // row["naum"] = rows.nilai_akhir_umum;
+        // row["napr"] = rows.nilai_akhir_prestasi;
         row["na"] = rows.nilai_akhir;
         row["status"] = rows.kelulusan_pil_1_status ? "L" : "TL";
         row["order_person_status"] = rows.order_person_status ? "*" : "";
